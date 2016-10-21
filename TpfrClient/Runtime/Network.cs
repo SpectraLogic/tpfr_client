@@ -17,9 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using TpfrClient.Requests;
+using TpfrClient.Calls;
 
-namespace TpfrClient
+namespace TpfrClient.Runtime
 {
     public class Network : INetwork
     {
@@ -33,9 +33,9 @@ namespace TpfrClient
             HostServerPort = hostServerPort;
         }
 
-        public string HostServerName { get; private set; }
-        public int HostServerPort { get; private set; }
-        public Uri Proxy { get; private set; }
+        private string HostServerName { get; }
+        private int HostServerPort { get; }
+        private Uri Proxy { get; set; }
 
         public INetwork WithProxy(Uri proxy)
         {
@@ -43,13 +43,13 @@ namespace TpfrClient
             return this;
         }
 
-        public HttpWebResponse Invoke(RestRequest request)
+        public IHttpWebResponse Invoke(RestRequest request)
         {
             var httpWebRequest = CreateHttpWebRequest(request);
-            return (HttpWebResponse) httpWebRequest.GetResponse();
+            return new TpfrHttpWebResponse((HttpWebResponse)httpWebRequest.GetResponse());
         }
 
-        private HttpWebRequest CreateHttpWebRequest(RestRequest request)
+        private IHttpWebRequest CreateHttpWebRequest(RestRequest request)
         {
             var uriBuilder = new UriBuilder(HostServerName)
             {
@@ -77,7 +77,7 @@ namespace TpfrClient
             httpRequest.ReadWriteTimeout = ReadWriteTimeout;
             httpRequest.Timeout = RequestTimeout;
 
-            return httpRequest;
+            return new TpfrHttpWebRequest(httpRequest);
         }
 
         private string CreateHostString()

@@ -13,9 +13,9 @@
  * ****************************************************************************
  */
 
-namespace TpfrClient
+namespace TpfrClient.Model
 {
-    public class ByteRange :Range
+    public class ByteRange : Range
     {
         public ByteRange(string startTime, string endTime) : base(startTime, endTime)
         {

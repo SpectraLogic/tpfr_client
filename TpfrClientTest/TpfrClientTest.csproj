@@ -52,8 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mock\MockHttpWebResponse.cs" />
     <Compile Include="TpfrClientTest.cs" />
-    <Compile Include="MockNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +67,18 @@
       <Project>{A551AFAB-F765-4EA2-8DD9-AF31CAA18758}</Project>
       <Name>TpfrClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\FailedToIndex.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\SuccessfulIndexFileOrFileStatusCall.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\FileStatusWhenFileNotPresent.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\FileStatusWhenFileNotIndexed.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

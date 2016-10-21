@@ -15,13 +15,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using TpfrClient.Model;
+using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
     internal class QuestionTimecodeResponseParser : IResponseParser<IEnumerable<ByteRange>>
     {
-        public IEnumerable<ByteRange> Parse(HttpWebResponse response)
+        public IEnumerable<ByteRange> Parse(IHttpWebResponse response)
         {
             throw new NotImplementedException();
         }

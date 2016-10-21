@@ -14,11 +14,10 @@
  */
 
 using System;
-using TpfrClient.Requests;
 
 namespace TpfrClient.Calls
 {
-    public class IndexStatusRequest : RestRequest
+    public sealed class IndexStatusRequest : RestRequest
     {
         public IndexStatusRequest(string filePath)
         {

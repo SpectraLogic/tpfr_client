@@ -13,25 +13,31 @@
  * ****************************************************************************
  */
 
-using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using TpfrClient.Runtime;
 
-namespace TpfrClient.Calls
+namespace TpfrClientTest.Mock
 {
-    public sealed class IndexFileRequest : RestRequest
+    public class MockHttpWebResponse : IHttpWebResponse
     {
-        public IndexFileRequest(string filePath)
+        private readonly string _resourceName;
+        public MockHttpWebResponse(string resourceName, HttpStatusCode statusCode)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
+            _resourceName = resourceName;
+            StatusCode = statusCode;
         }
 
-        internal override HttpVerb Verb => HttpVerb.GET;
-        internal override string Path => "indexfile";
+        public void Dispose()
+        {
+        }
+
+        public Stream GetResponseStream()
+        {
+            return Assembly.GetExecutingAssembly().GetManifestResourceStream(_resourceName);
+        }
+
+        public HttpStatusCode StatusCode { get; }
     }
 }

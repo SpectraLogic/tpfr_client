@@ -13,7 +13,7 @@
  * ****************************************************************************
  */
 
-namespace TpfrClient
+namespace TpfrClient.Model
 {
     public class TimecodeRange : Range
     {

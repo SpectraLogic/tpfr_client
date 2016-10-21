@@ -14,14 +14,13 @@
  */
 
 using System;
-using System.Net;
-using TpfrClient.Requests;
+using TpfrClient.Calls;
 
-namespace TpfrClient
+namespace TpfrClient.Runtime
 {
     public interface INetwork
     {
         INetwork WithProxy(Uri proxy);
-        HttpWebResponse Invoke(RestRequest request);
+        IHttpWebResponse Invoke(RestRequest request);
     }
 }

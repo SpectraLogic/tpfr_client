@@ -13,45 +13,135 @@
  * ****************************************************************************
  */
 
+using System.Net;
+using Moq;
 using NUnit.Framework;
-using TpfrClient;
 using TpfrClient.Calls;
+using TpfrClient.Model;
+using TpfrClient.Runtime;
+using TpfrClientTest.Mock;
 
 namespace TpfrClientTest
 {
     [TestFixture]
     public class TpfrClientTest
     {
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void TestFailedIndexFile()
         {
-            _tpfrClient = new TpfrClient.TpfrClient(new MockNetwork());
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FailedToIndex.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexFile(new IndexFileRequest("filePath"));
+
+            Assert.AreEqual(Result.Failed, status.IndexResult);
+            Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
+
+            mockNetwork.VerifyAll();
         }
 
-        private ITpfrClient _tpfrClient;
-
         [Test]
-        public void TestIndexFile()
+        public void TestSuccessfulIndexFile()
         {
-            _tpfrClient.IndexFile(new IndexFileRequest(null));
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.SuccessfulIndexFileOrFileStatusCall.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexFile(new IndexFileRequest("filePath"));
+
+            Assert.AreEqual(Result.Succeeded, status.IndexResult);
+            Assert.AreEqual("2011/10/21 11:40:53", status.IndexTime);
+            Assert.AreEqual("01:00:00;00", status.FileStartTc);
+            Assert.AreEqual("1800", status.FileDuration);
+            Assert.AreEqual("29.97", status.FileFrameRate);
+
+            mockNetwork.VerifyAll();
         }
 
         [Test]
-        public void TestIndexStatus()
+        public void TestFailedIndexStatus()
         {
-            _tpfrClient.IndexStatus(new IndexStatusRequest(null));
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FailedToIndex.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+
+            Assert.AreEqual(Result.Failed, status.IndexResult);
+            Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
+        public void TestSuccessfulIndexStatus()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.SuccessfulIndexFileOrFileStatusCall.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+
+            Assert.AreEqual(Result.Succeeded, status.IndexResult);
+            Assert.AreEqual("2011/10/21 11:40:53", status.IndexTime);
+            Assert.AreEqual("01:00:00;00", status.FileStartTc);
+            Assert.AreEqual("1800", status.FileDuration);
+            Assert.AreEqual("29.97", status.FileFrameRate);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
+        public void TestFileNotFoundIndexStatus()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotPresent.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+
+            Assert.AreEqual(Result.ErrorFileNotFound, status.IndexResult);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
+        public void TestFileNotIndexedIndexStatus()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotIndexed.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+
+            Assert.AreEqual(Result.NotIndexed, status.IndexResult);
+
+            mockNetwork.VerifyAll();
         }
 
         [Test]
         public void TestQuestionTimecode()
         {
-            _tpfrClient.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
+            //client.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
         }
 
         [Test]
         public void TestReWrap()
         {
-            _tpfrClient.ReWrap(new ReWrapRequest(null, null, null));
+            //client.ReWrap(new ReWrapRequest(null, null, null));
         }
     }
 }

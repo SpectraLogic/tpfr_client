@@ -13,16 +13,9 @@
  * ****************************************************************************
  */
 
-using System;
-using System.Net;
-
 namespace TpfrClient.ResponseParsers
 {
-    internal class IndexStatusResponseParser : IResponseParser<Status>
+    internal class IndexStatusResponseParser : IndexResponseParser
     {
-        public Status Parse(HttpWebResponse response)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

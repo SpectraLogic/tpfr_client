@@ -14,9 +14,8 @@
  */
 
 using System.Collections.Generic;
-using System.IO;
 
-namespace TpfrClient.Requests
+namespace TpfrClient.Calls
 {
     public abstract class RestRequest
     {
@@ -30,22 +29,7 @@ namespace TpfrClient.Requests
             get;
         }
 
-        internal virtual long GetContentLength()
-        {
-            return 0;
-        }
-
-        internal virtual Stream GetContentStream()
-        {
-            return Stream.Null;
-        }
-
         internal virtual Dictionary<string, string> QueryParams { get; } = new Dictionary<string, string>();
-
-        public string GetDescription(string paramstring)
-        {
-            return $"{this.Verb} {this.Path}{(string.IsNullOrEmpty(paramstring) ? "" : "?")}{(string.IsNullOrEmpty(paramstring) ? "" : paramstring)}";
-        }
     }
 
     internal enum HttpVerb { GET, PUT, POST, DELETE, HEAD, PATCH };

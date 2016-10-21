@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using TpfrClient;
 using TpfrClient.Calls;
+using TpfrClient.Model;
 
 namespace TpfrClientIntegrationTest
 {

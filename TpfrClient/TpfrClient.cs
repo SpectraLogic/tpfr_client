@@ -16,7 +16,9 @@
 using System;
 using System.Collections.Generic;
 using TpfrClient.Calls;
+using TpfrClient.Model;
 using TpfrClient.ResponseParsers;
+using TpfrClient.Runtime;
 
 namespace TpfrClient
 {

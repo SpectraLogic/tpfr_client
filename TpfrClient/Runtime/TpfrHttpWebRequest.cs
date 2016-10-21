@@ -13,25 +13,22 @@
  * ****************************************************************************
  */
 
-using System;
+using System.Net;
 
-namespace TpfrClient.Calls
+namespace TpfrClient.Runtime
 {
-    public sealed class IndexFileRequest : RestRequest
+    public class TpfrHttpWebRequest : IHttpWebRequest
     {
-        public IndexFileRequest(string filePath)
+        private readonly HttpWebRequest _httpWebRequest;
+
+        public TpfrHttpWebRequest(HttpWebRequest httpWebRequest)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
+            _httpWebRequest = httpWebRequest;
         }
 
-        internal override HttpVerb Verb => HttpVerb.GET;
-        internal override string Path => "indexfile";
+        public IHttpWebResponse GetResponse()
+        {
+            return new TpfrHttpWebResponse((HttpWebResponse)_httpWebRequest.GetResponse());
+        }
     }
 }

@@ -45,9 +45,16 @@
     <Compile Include="Calls\QuestionTimecodeRequest.cs" />
     <Compile Include="Calls\ReWrapRequest.cs" />
     <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />
+    <Compile Include="ResponseParsers\IndexResponseParser.cs" />
     <Compile Include="ResponseParsers\IndexStatusResponseParser.cs" />
     <Compile Include="ResponseParsers\IResponseParser.cs" />
     <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
+    <Compile Include="ResponseParsers\ResponseParseUtils.cs" />
+    <Compile Include="ResponseParsers\XmlExtensions.cs" />
+    <Compile Include="Runtime\IHttpWebRequest.cs" />
+    <Compile Include="Runtime\IHttpWebResponse.cs" />
+    <Compile Include="Runtime\TpfrHttpWebRequest.cs" />
+    <Compile Include="Runtime\TpfrHttpWebResponse.cs" />
     <Compile Include="TpfrClient.cs" />
     <Compile Include="Model\ByteRange.cs" />
     <Compile Include="ITpfrClient.cs" />

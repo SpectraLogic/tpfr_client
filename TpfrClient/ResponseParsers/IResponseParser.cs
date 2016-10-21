@@ -13,12 +13,12 @@
  * ****************************************************************************
  */
 
-using System.Net;
+using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
     internal interface IResponseParser<out TResponse>
     {
-        TResponse Parse(HttpWebResponse response);
+        TResponse Parse(IHttpWebResponse response);
     }
 }

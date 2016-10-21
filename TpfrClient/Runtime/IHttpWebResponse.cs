@@ -14,24 +14,14 @@
  */
 
 using System;
+using System.IO;
+using System.Net;
 
-namespace TpfrClient.Calls
+namespace TpfrClient.Runtime
 {
-    public sealed class IndexFileRequest : RestRequest
+    public interface IHttpWebResponse : IDisposable
     {
-        public IndexFileRequest(string filePath)
-        {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
-        }
-
-        internal override HttpVerb Verb => HttpVerb.GET;
-        internal override string Path => "indexfile";
+        Stream GetResponseStream();
+        HttpStatusCode StatusCode { get; }
     }
 }

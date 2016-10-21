@@ -13,7 +13,7 @@
  * ****************************************************************************
  */
 
-namespace TpfrClient
+namespace TpfrClient.Model
 {
     public class Status
     {
@@ -29,6 +29,7 @@ namespace TpfrClient
         Failed,
         Succeeded,
         ErrorFileNotFound,
-        NotIndexed
+        NotIndexed,
+        Unknown
     }
 }

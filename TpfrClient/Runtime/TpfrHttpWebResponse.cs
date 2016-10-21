@@ -14,22 +14,35 @@
  */
 
 using System;
+using System.IO;
 using System.Net;
-using TpfrClient;
-using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient.Runtime
 {
-    public class MockNetwork : INetwork
+    public sealed class TpfrHttpWebResponse : IHttpWebResponse
     {
-        public INetwork WithProxy(Uri proxy)
+        private readonly HttpWebResponse _httpWebResponse;
+
+        internal TpfrHttpWebResponse(HttpWebResponse httpWebResponse)
         {
-            throw new NotImplementedException();
+            _httpWebResponse = httpWebResponse;
+        }
+        public Stream GetResponseStream()
+        {
+            return _httpWebResponse.GetResponseStream();
         }
 
-        public HttpWebResponse Invoke(RestRequest request)
+        public HttpStatusCode StatusCode => _httpWebResponse.StatusCode;
+
+        public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Dispose(true);
+            _httpWebResponse.Close();
+            GC.SuppressFinalize(this);
+        }
+
+        private static void Dispose(bool disposing)
+        {
         }
     }
 }
