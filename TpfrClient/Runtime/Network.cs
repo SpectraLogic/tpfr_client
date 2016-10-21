@@ -14,6 +14,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using TpfrClient.Requests;
 
@@ -21,17 +23,79 @@ namespace TpfrClient
 {
     public class Network : INetwork
     {
-        public string HostServerName { get; private set; }
-        public long HostServerPort { get; private set; }
+        private const int ReadWriteTimeout = 60 * 60 * 1000;
+        private const int RequestTimeout = 60 * 60 * 1000;
+        private const int ConnectionLimit = 12;
+
         public Network(string hostServerName, int hostServerPort)
         {
             HostServerName = hostServerName;
             HostServerPort = hostServerPort;
         }
 
+        public string HostServerName { get; private set; }
+        public int HostServerPort { get; private set; }
+        public Uri Proxy { get; private set; }
+
+        public INetwork WithProxy(Uri proxy)
+        {
+            Proxy = proxy;
+            return this;
+        }
+
         public HttpWebResponse Invoke(RestRequest request)
         {
-            throw new NotImplementedException();
+            var httpWebRequest = CreateHttpWebRequest(request);
+            return (HttpWebResponse) httpWebRequest.GetResponse();
+        }
+
+        private HttpWebRequest CreateHttpWebRequest(RestRequest request)
+        {
+            var uriBuilder = new UriBuilder(HostServerName)
+            {
+                Path = Uri.EscapeDataString(request.Path),
+                Query = BuildQueryParams(request.QueryParams),
+                Port = HostServerPort
+            };
+
+
+            var httpRequest = (HttpWebRequest) WebRequest.Create(uriBuilder.ToString());
+            httpRequest.ServicePoint.ConnectionLimit = ConnectionLimit;
+            httpRequest.Method = request.Verb.ToString();
+
+            if (Proxy != null)
+            {
+                var webProxy = new WebProxy
+                {
+                    Address = Proxy
+                };
+                httpRequest.Proxy = webProxy;
+            }
+
+            httpRequest.Date = DateTime.UtcNow;
+            httpRequest.Host = CreateHostString();
+            httpRequest.ReadWriteTimeout = ReadWriteTimeout;
+            httpRequest.Timeout = RequestTimeout;
+
+            return httpRequest;
+        }
+
+        private string CreateHostString()
+        {
+            return $"{HostServerName}:{HostServerPort}";
+        }
+
+        private static string BuildQueryParams(Dictionary<string, string> queryParams)
+        {
+            return string.Join(
+                "&",
+                from kvp in queryParams
+                orderby kvp.Key
+                let encodedKey = Uri.EscapeDataString(kvp.Key)
+                select !string.IsNullOrEmpty(kvp.Value)
+                    ? encodedKey + "=" + Uri.EscapeDataString(kvp.Value)
+                    : encodedKey
+            );
         }
     }
 }

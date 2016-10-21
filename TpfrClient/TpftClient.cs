@@ -22,7 +22,7 @@ namespace TpfrClient
 {
     public class TpftClient : ITpftClient
     {
-        private INetwork _network;
+        private readonly INetwork _network;
 
         public TpftClient(string hostServerName, int hostServerPort)
         {
@@ -32,6 +32,12 @@ namespace TpfrClient
         public TpftClient(INetwork network)
         {
             _network = network;
+        }
+
+        public TpftClient WithProxy(Uri proxy)
+        {
+            _network.WithProxy(proxy);
+            return this;
         }
 
         public Status IndexFile(IndexFileRequest request)

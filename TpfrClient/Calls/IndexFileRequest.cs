@@ -33,6 +33,6 @@ namespace TpfrClient.Calls
         }
 
         internal override HttpVerb Verb => HttpVerb.GET;
-        internal override string Path => "/indexfile";
+        internal override string Path => "indexfile";
     }
 }

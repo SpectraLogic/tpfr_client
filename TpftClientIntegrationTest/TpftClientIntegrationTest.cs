@@ -14,25 +14,26 @@
  */
 
 using System;
-using TpfrClient.Requests;
+using NUnit.Framework;
+using TpfrClient;
+using TpfrClient.Calls;
 
-namespace TpfrClient.Calls
+namespace TpftClientIntegrationTest
 {
-    public class IndexStatusRequest : RestRequest
+    [TestFixture]
+    public class TpftClientIntegrationTest
     {
-        public IndexStatusRequest(string filePath)
+        private ITpftClient _client;
+        [SetUp]
+        public void Setup()
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
+            _client = new TpftClient("HostServerName", 60792).WithProxy(new Uri("http://localhost:8888"));
         }
 
-        internal override HttpVerb Verb => HttpVerb.GET;
-        internal override string Path => "indexstatus";
+        [Test]
+        public void TestFileIndex()
+        {
+            _client.IndexFile(new IndexFileRequest(@"C:\Media\SampleFile.mxf"));
+        }
     }
 }

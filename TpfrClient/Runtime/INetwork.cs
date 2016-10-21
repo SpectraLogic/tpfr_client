@@ -13,6 +13,7 @@
  * ****************************************************************************
  */
 
+using System;
 using System.Net;
 using TpfrClient.Requests;
 
@@ -20,6 +21,7 @@ namespace TpfrClient
 {
     public interface INetwork
     {
+        INetwork WithProxy(Uri proxy);
         HttpWebResponse Invoke(RestRequest request);
     }
 }

@@ -13,6 +13,7 @@
  * ****************************************************************************
  */
 
+using System;
 using System.Net;
 using TpfrClient;
 using TpfrClient.Requests;
@@ -21,6 +22,11 @@ namespace TpfrClientTest
 {
     public class MockNetwork : INetwork
     {
+        public INetwork WithProxy(Uri proxy)
+        {
+            throw new NotImplementedException();
+        }
+
         public HttpWebResponse Invoke(RestRequest request)
         {
             throw new System.NotImplementedException();
