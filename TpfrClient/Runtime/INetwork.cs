@@ -14,16 +14,12 @@
  */
 
 using System.Net;
-using TpfrClient;
 using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient
 {
-    public class MockNetwork : INetwork
+    public interface INetwork
     {
-        public HttpWebResponse Invoke(RestRequest request)
-        {
-            throw new System.NotImplementedException();
-        }
+        HttpWebResponse Invoke(RestRequest request);
     }
 }

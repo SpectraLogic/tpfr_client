@@ -40,15 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PluginSdk.cs" />
-    <Compile Include="ByteRange.cs" />
-    <Compile Include="IPluginSdk.cs" />
-    <Compile Include="INetwork.cs" />
-    <Compile Include="Network.cs" />
+    <Compile Include="Calls\IndexFileRequest.cs" />
+    <Compile Include="Calls\IndexStatusRequest.cs" />
+    <Compile Include="Calls\QuestionTimecodeRequest.cs" />
+    <Compile Include="Calls\ReWrapRequest.cs" />
+    <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />
+    <Compile Include="ResponseParsers\IndexStatusResponseParser.cs" />
+    <Compile Include="ResponseParsers\IResponseParser.cs" />
+    <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
+    <Compile Include="TpftClient.cs" />
+    <Compile Include="Model\ByteRange.cs" />
+    <Compile Include="ITpftClient.cs" />
+    <Compile Include="Calls\RestRequest.cs" />
+    <Compile Include="Runtime\INetwork.cs" />
+    <Compile Include="Runtime\Network.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Range.cs" />
-    <Compile Include="Status.cs" />
-    <Compile Include="TimecodeRange.cs" />
+    <Compile Include="Model\Range.cs" />
+    <Compile Include="Model\Status.cs" />
+    <Compile Include="Model\TimecodeRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TpfrClient.licenseheader" />

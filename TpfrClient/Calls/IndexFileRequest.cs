@@ -13,17 +13,26 @@
  * ****************************************************************************
  */
 
-using System.Net;
-using TpfrClient;
+using System;
 using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient.Calls
 {
-    public class MockNetwork : INetwork
+    public class IndexFileRequest : RestRequest
     {
-        public HttpWebResponse Invoke(RestRequest request)
+        public IndexFileRequest(string filePath)
         {
-            throw new System.NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                QueryParams.Add("filepath", filePath);
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
         }
+
+        internal override HttpVerb Verb => HttpVerb.GET;
+        internal override string Path => "/indexfile";
     }
 }

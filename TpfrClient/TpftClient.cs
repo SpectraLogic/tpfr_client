@@ -15,42 +15,43 @@
 
 using System;
 using System.Collections.Generic;
+using TpfrClient.Calls;
+using TpfrClient.ResponseParsers;
 
 namespace TpfrClient
 {
-    public class PluginSdk : IPluginSdk
+    public class TpftClient : ITpftClient
     {
         private INetwork _network;
 
-        public PluginSdk(string hostServerName, int hostServerPort)
+        public TpftClient(string hostServerName, int hostServerPort)
         {
             _network = new Network(hostServerName, hostServerPort);
         }
 
-        public PluginSdk(INetwork network)
+        public TpftClient(INetwork network)
         {
             _network = network;
         }
 
-        public Status IndexFile(string filePath)
+        public Status IndexFile(IndexFileRequest request)
         {
-            throw new NotImplementedException();
+            return new IndexFileResponseParser().Parse(_network.Invoke(request));
         }
 
-        public Status IndexStatus(string filePath)
+        public Status IndexStatus(IndexStatusRequest request)
         {
-            throw new NotImplementedException();
+            return new IndexStatusResponseParser().Parse(_network.Invoke(request));
         }
 
-        public IEnumerable<ByteRange> QuestionTimecode(string clipName, string indexFilePath,
-            IEnumerable<TimecodeRange> timecodes)
+        public IEnumerable<ByteRange> QuestionTimecode(QuestionTimecodeRequest request)
         {
-            throw new NotImplementedException();
+            return new QuestionTimecodeResponseParser().Parse(_network.Invoke(request));
         }
 
-        public void ReWrap(string fileToProcessPath, string indexFilePath, IEnumerable<TimecodeRange> timecodes)
+        public void ReWrap(ReWrapRequest request)
         {
-            throw new NotImplementedException();
+            _network.Invoke(request);
         }
     }
 }

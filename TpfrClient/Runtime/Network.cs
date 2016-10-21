@@ -13,12 +13,25 @@
  * ****************************************************************************
  */
 
+using System;
+using System.Net;
+using TpfrClient.Requests;
+
 namespace TpfrClient
 {
     public class Network : INetwork
     {
+        public string HostServerName { get; private set; }
+        public long HostServerPort { get; private set; }
         public Network(string hostServerName, int hostServerPort)
         {
+            HostServerName = hostServerName;
+            HostServerPort = hostServerPort;
+        }
+
+        public HttpWebResponse Invoke(RestRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

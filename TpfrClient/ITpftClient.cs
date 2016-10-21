@@ -13,17 +13,16 @@
  * ****************************************************************************
  */
 
-using System.Net;
-using TpfrClient;
-using TpfrClient.Requests;
+using System.Collections.Generic;
+using TpfrClient.Calls;
 
-namespace TpfrClientTest
+namespace TpfrClient
 {
-    public class MockNetwork : INetwork
+    public interface ITpftClient
     {
-        public HttpWebResponse Invoke(RestRequest request)
-        {
-            throw new System.NotImplementedException();
-        }
+        Status IndexFile(IndexFileRequest request);
+        Status IndexStatus(IndexStatusRequest request);
+        IEnumerable<ByteRange> QuestionTimecode(QuestionTimecodeRequest request);
+        void ReWrap(ReWrapRequest request);
     }
 }

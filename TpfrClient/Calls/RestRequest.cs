@@ -13,45 +13,40 @@
  * ****************************************************************************
  */
 
-using NUnit.Framework;
-using TpfrClient;
-using TpfrClient.Calls;
+using System.Collections.Generic;
+using System.IO;
 
-namespace TpfrClientTest
+namespace TpfrClient.Requests
 {
-    [TestFixture]
-    public class TpfrClientTest
+    public abstract class RestRequest
     {
-        [SetUp]
-        public void Setup()
+        internal abstract HttpVerb Verb
         {
-            _tpftClient = new TpftClient(new MockNetwork());
+            get;
         }
 
-        private ITpftClient _tpftClient;
-
-        [Test]
-        public void TestIndexFile()
+        internal abstract string Path
         {
-            _tpftClient.IndexFile(new IndexFileRequest(null));
+            get;
         }
 
-        [Test]
-        public void TestIndexStatus()
+        internal virtual long GetContentLength()
         {
-            _tpftClient.IndexStatus(new IndexStatusRequest(null));
+            return 0;
         }
 
-        [Test]
-        public void TestQuestionTimecode()
+        internal virtual Stream GetContentStream()
         {
-            _tpftClient.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
+            return Stream.Null;
         }
 
-        [Test]
-        public void TestReWrap()
+        internal virtual Dictionary<string, string> QueryParams { get; } = new Dictionary<string, string>();
+
+        public string GetDescription(string paramstring)
         {
-            _tpftClient.ReWrap(new ReWrapRequest(null, null, null));
+            return $"{this.Verb} {this.Path}{(string.IsNullOrEmpty(paramstring) ? "" : "?")}{(string.IsNullOrEmpty(paramstring) ? "" : paramstring)}";
         }
     }
+
+    internal enum HttpVerb { GET, PUT, POST, DELETE, HEAD, PATCH };
 }

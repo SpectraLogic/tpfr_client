@@ -13,17 +13,16 @@
  * ****************************************************************************
  */
 
+using System;
 using System.Net;
-using TpfrClient;
-using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient.ResponseParsers
 {
-    public class MockNetwork : INetwork
+    internal class IndexFileResponseParser : IResponseParser<Status>
     {
-        public HttpWebResponse Invoke(RestRequest request)
+        public Status Parse(HttpWebResponse response)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,17 +13,17 @@
  * ****************************************************************************
  */
 
+using System;
+using System.Collections.Generic;
 using System.Net;
-using TpfrClient;
-using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient.ResponseParsers
 {
-    public class MockNetwork : INetwork
+    internal class QuestionTimecodeResponseParser : IResponseParser<IEnumerable<ByteRange>>
     {
-        public HttpWebResponse Invoke(RestRequest request)
+        public IEnumerable<ByteRange> Parse(HttpWebResponse response)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

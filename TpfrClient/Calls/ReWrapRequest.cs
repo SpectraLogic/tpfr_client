@@ -13,17 +13,20 @@
  * ****************************************************************************
  */
 
-using System.Net;
-using TpfrClient;
+using System;
+using System.Collections.Generic;
 using TpfrClient.Requests;
 
-namespace TpfrClientTest
+namespace TpfrClient.Calls
 {
-    public class MockNetwork : INetwork
+    public class ReWrapRequest : RestRequest
     {
-        public HttpWebResponse Invoke(RestRequest request)
+        public ReWrapRequest(string fileToProcessPath, string indexFilePath, IEnumerable<TimecodeRange> timecodes)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
+
+        internal override HttpVerb Verb { get; }
+        internal override string Path { get; }
     }
 }
