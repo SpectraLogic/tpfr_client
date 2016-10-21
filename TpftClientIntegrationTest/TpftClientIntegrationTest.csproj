@@ -48,8 +48,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\TpfrClient\TpfrClient.licenseheader">
-      <Link>TpfrClient.licenseheader</Link>
+    <None Include="..\TpfrClient\SpectraLogic.licenseheader">
+      <Link>SpectraLogic.licenseheader</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
