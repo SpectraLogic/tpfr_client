@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using TpfrClient;
 using TpfrClient.Calls;
@@ -34,6 +35,24 @@ namespace TpftClientIntegrationTest
         public void TestFileIndex()
         {
             _client.IndexFile(new IndexFileRequest(@"C:\Media\SampleFile.mxf"));
+        }
+
+        [Test]
+        public void TestFileStatus()
+        {
+            _client.IndexStatus(new IndexStatusRequest(@"C:\Media\SampleFile.mxf"));
+        }
+
+        [Test]
+        public void TestQuestionTimecode()
+        {
+            _client.QuestionTimecode(new QuestionTimecodeRequest("", "", new List<TimecodeRange>()));
+        }
+
+        [Test]
+        public void TestReWrap()
+        {
+            _client.ReWrap(new ReWrapRequest("", "", new List<TimecodeRange>()));
         }
     }
 }
