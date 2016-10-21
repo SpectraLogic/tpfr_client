@@ -20,21 +20,21 @@ using TpfrClient.ResponseParsers;
 
 namespace TpfrClient
 {
-    public class TpftClient : ITpftClient
+    public class TpfrClient : ITpfrClient
     {
         private readonly INetwork _network;
 
-        public TpftClient(string hostServerName, int hostServerPort)
+        public TpfrClient(string hostServerName, int hostServerPort)
         {
             _network = new Network(hostServerName, hostServerPort);
         }
 
-        public TpftClient(INetwork network)
+        public TpfrClient(INetwork network)
         {
             _network = network;
         }
 
-        public TpftClient WithProxy(Uri proxy)
+        public TpfrClient WithProxy(Uri proxy)
         {
             _network.WithProxy(proxy);
             return this;

@@ -25,33 +25,33 @@ namespace TpfrClientTest
         [SetUp]
         public void Setup()
         {
-            _tpftClient = new TpftClient(new MockNetwork());
+            _tpfrClient = new TpfrClient.TpfrClient(new MockNetwork());
         }
 
-        private ITpftClient _tpftClient;
+        private ITpfrClient _tpfrClient;
 
         [Test]
         public void TestIndexFile()
         {
-            _tpftClient.IndexFile(new IndexFileRequest(null));
+            _tpfrClient.IndexFile(new IndexFileRequest(null));
         }
 
         [Test]
         public void TestIndexStatus()
         {
-            _tpftClient.IndexStatus(new IndexStatusRequest(null));
+            _tpfrClient.IndexStatus(new IndexStatusRequest(null));
         }
 
         [Test]
         public void TestQuestionTimecode()
         {
-            _tpftClient.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
+            _tpfrClient.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
         }
 
         [Test]
         public void TestReWrap()
         {
-            _tpftClient.ReWrap(new ReWrapRequest(null, null, null));
+            _tpfrClient.ReWrap(new ReWrapRequest(null, null, null));
         }
     }
 }

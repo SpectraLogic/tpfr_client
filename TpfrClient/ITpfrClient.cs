@@ -18,7 +18,7 @@ using TpfrClient.Calls;
 
 namespace TpfrClient
 {
-    public interface ITpftClient
+    public interface ITpfrClient
     {
         Status IndexFile(IndexFileRequest request);
         Status IndexStatus(IndexStatusRequest request);

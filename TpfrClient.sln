@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpfrClient", "TpfrClient\Tp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpfrClientTest", "TpfrClientTest\TpfrClientTest.csproj", "{3134019D-039E-4D55-B27B-C07545ABF7B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpftClientIntegrationTest", "TpftClientIntegrationTest\TpftClientIntegrationTest.csproj", "{F035A37B-3DF1-45F3-87C6-42569C2590C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpfrClientIntegrationTest", "TpfrClientIntegrationTest\TpfrClientIntegrationTest.csproj", "{F035A37B-3DF1-45F3-87C6-42569C2590C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

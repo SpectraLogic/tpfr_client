@@ -19,16 +19,16 @@ using NUnit.Framework;
 using TpfrClient;
 using TpfrClient.Calls;
 
-namespace TpftClientIntegrationTest
+namespace TpfrClientIntegrationTest
 {
     [TestFixture]
-    public class TpftClientIntegrationTest
+    public class TpfrClientIntegrationTest
     {
-        private ITpftClient _client;
+        private ITpfrClient _client;
         [SetUp]
         public void Setup()
         {
-            _client = new TpftClient("HostServerName", 60792).WithProxy(new Uri("http://localhost:8888"));
+            _client = new TpfrClient.TpfrClient("HostServerName", 60792).WithProxy(new Uri("http://localhost:8888"));
         }
 
         [Test]

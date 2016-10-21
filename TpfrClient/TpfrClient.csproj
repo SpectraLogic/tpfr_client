@@ -48,9 +48,9 @@
     <Compile Include="ResponseParsers\IndexStatusResponseParser.cs" />
     <Compile Include="ResponseParsers\IResponseParser.cs" />
     <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
-    <Compile Include="TpftClient.cs" />
+    <Compile Include="TpfrClient.cs" />
     <Compile Include="Model\ByteRange.cs" />
-    <Compile Include="ITpftClient.cs" />
+    <Compile Include="ITpfrClient.cs" />
     <Compile Include="Calls\RestRequest.cs" />
     <Compile Include="Runtime\INetwork.cs" />
     <Compile Include="Runtime\Network.cs" />
