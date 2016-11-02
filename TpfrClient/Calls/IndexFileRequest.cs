@@ -17,6 +17,10 @@ namespace TpfrClient.Calls
 {
     public class IndexFileRequest : RestRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">The full path (via a mapped drive on the StorNext MDC) to the media file to be indexed.</param>
         public IndexFileRequest(string filePath)
         {
             AddQueryParam("filepath", filePath);

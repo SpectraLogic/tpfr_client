@@ -19,6 +19,13 @@ namespace TpfrClient.Calls
 {
     public class QuestionTimecodeRequest : RestRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">The full path (via a mapped drive) to the media file whose partial offsets are being requested.</param>
+        /// <param name="firstFrame">Timecode of the first frame requested</param>
+        /// <param name="lastFrame">Timecode of the last frame requested</param>
+        /// <param name="frameRate">Frame rate, as returned in the file status report</param>
         public QuestionTimecodeRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate)
         {
             AddQueryParam("filepath", filePath);

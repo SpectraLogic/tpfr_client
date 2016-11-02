@@ -17,6 +17,10 @@ namespace TpfrClient.Calls
 {
     public class IndexStatusRequest : RestRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">The full path (via a mapped drive on the StorNext MDC) to the media file whose status is to be retrieved.</param>
         public IndexStatusRequest(string filePath)
         {
             AddQueryParam("filepath", filePath);

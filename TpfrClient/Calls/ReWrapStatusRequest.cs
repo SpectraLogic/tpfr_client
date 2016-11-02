@@ -17,6 +17,10 @@ namespace TpfrClient.Calls
 {
     public class ReWrapStatusRequest : RestRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="outputFileName">The out_filename value passed in the Partial File Request</param>
         public ReWrapStatusRequest(string outputFileName)
         {
             AddQueryParam("targetpartialname", outputFileName);
