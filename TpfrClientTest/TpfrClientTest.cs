@@ -13,6 +13,7 @@
  * ****************************************************************************
  */
 
+using System;
 using System.Net;
 using Moq;
 using NUnit.Framework;
@@ -168,6 +169,39 @@ namespace TpfrClientTest
             Assert.AreEqual(OffsetsResult.ErrorFileNotFound, status.OffsetsResult);
 
             mockNetwork.VerifyAll();
+        }
+
+        private static readonly object[] GoodTimeCodes = 
+        {
+            new object[] {"00:00:00:00"},
+            new object[] {"00:00:00;00"},
+            new object[] {"12:34:56:78"},
+            new object[] {"12:34:56;78"}
+        };
+
+        [Test, TestCaseSource(nameof(GoodTimeCodes))]
+        public void TestGoodTimeCodeFormat(string timeCode)
+        {
+            Assert.AreEqual(timeCode, new TimeCode(timeCode).Time);
+        }
+
+        private static readonly object[] BadTimeCodes =
+        {
+            new object[] {"00:00:00.00"},
+            new object[] {"00.00.00.00"},
+            new object[] {"00"},
+            new object[] {"00:00"},
+            new object[] {"00:00:00"},
+            new object[] {"x0:00:00:00"},
+            new object[] {"00:x0:00:00"},
+            new object[] {"00:00:x0:00"},
+            new object[] {"00:00:00:x0"}
+        };
+
+        [Test, TestCaseSource(nameof(BadTimeCodes))]
+        public void TestBadTimeCodeFormat(string timeCode)
+        {
+            Assert.Throws<ArgumentException>(() => new TimeCode(timeCode));
         }
 
         [Test]
