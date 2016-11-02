@@ -14,7 +14,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using TpfrClient.Calls;
 using TpfrClient.Model;
 using TpfrClient.ResponseParsers;
@@ -60,6 +59,11 @@ namespace TpfrClient
         public void ReWrap(ReWrapRequest request)
         {
             new ReWrapResponseParser().Parse(_network.Invoke(request));
+        }
+
+        public ReWrapStatus ReWrapStatus(ReWrapStatusRequest request)
+        {
+            return new ReWrapStatusResponseParser().Parse(_network.Invoke(request));
         }
     }
 }

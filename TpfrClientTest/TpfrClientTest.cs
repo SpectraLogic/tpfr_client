@@ -237,5 +237,31 @@ namespace TpfrClientTest
 
             mockNetwork.VerifyAll();
         }
+
+        private static readonly object[] ReWrapStatusObjects =
+        {
+            new object[] {"JobPending.xml", Phase.Pending, "0"},
+            new object[] {"JobParsing.xml", Phase.Parsing, "25"},
+            new object[] {"JobTransferring.xml", Phase.Transferring, "50"},
+            new object[] {"JobComplete.xml", Phase.Complete, "100"},
+            new object[] { "JobFailed.xml", Phase.Failed, "0"}
+        };
+
+        [Test, TestCaseSource(nameof(ReWrapStatusObjects))]
+        public void TesReWrapStatus(string xmlFile, Phase phase, string percentComplete)
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles."+xmlFile, HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.ReWrapStatus(new ReWrapStatusRequest("outputFileName"));
+
+            Assert.AreEqual(phase, status.Phase);
+            Assert.AreEqual(percentComplete, status.Percentcomplete);
+
+            mockNetwork.VerifyAll();
+        }
     }
 }

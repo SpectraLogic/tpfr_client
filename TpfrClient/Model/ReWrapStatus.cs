@@ -13,17 +13,22 @@
  * ****************************************************************************
  */
 
-using TpfrClient.Calls;
-using TpfrClient.Model;
-
-namespace TpfrClient
+namespace TpfrClient.Model
 {
-    public interface ITpfrClient
+    public class ReWrapStatus
     {
-        IndexStatus IndexFile(IndexFileRequest request);
-        IndexStatus IndexStatus(IndexStatusRequest request);
-        OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request);
-        void ReWrap(ReWrapRequest request);
-        ReWrapStatus ReWrapStatus(ReWrapStatusRequest request);
+        public string Error { get; set; }
+        public Phase? Phase { get; set; }
+        public string Percentcomplete { get; set; }
+    }
+
+    public enum Phase
+    {
+        Pending,
+        Parsing,
+        Transferring,
+        Complete,
+        Failed,
+        Unknown
     }
 }

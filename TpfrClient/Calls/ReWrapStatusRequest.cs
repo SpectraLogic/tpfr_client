@@ -13,17 +13,25 @@
  * ****************************************************************************
  */
 
-using TpfrClient.Calls;
-using TpfrClient.Model;
+using System;
 
-namespace TpfrClient
+namespace TpfrClient.Calls
 {
-    public interface ITpfrClient
+    public class ReWrapStatusRequest : RestRequest
     {
-        IndexStatus IndexFile(IndexFileRequest request);
-        IndexStatus IndexStatus(IndexStatusRequest request);
-        OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request);
-        void ReWrap(ReWrapRequest request);
-        ReWrapStatus ReWrapStatus(ReWrapStatusRequest request);
+        public ReWrapStatusRequest(string outputFileName)
+        {
+            if (!string.IsNullOrWhiteSpace(outputFileName))
+            {
+                QueryParams.Add("targetpartialname", outputFileName);
+            }
+            else
+            {
+                throw new ArgumentNullException(outputFileName);
+            }
+        }
+
+        internal override HttpVerb Verb => HttpVerb.GET;
+        internal override string Path => "partialfilestatus";
     }
 }

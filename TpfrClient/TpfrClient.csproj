@@ -44,7 +44,9 @@
     <Compile Include="Calls\IndexStatusRequest.cs" />
     <Compile Include="Calls\QuestionTimecodeRequest.cs" />
     <Compile Include="Calls\ReWrapRequest.cs" />
+    <Compile Include="Calls\ReWrapStatusRequest.cs" />
     <Compile Include="Model\OffsetsStatus.cs" />
+    <Compile Include="Model\ReWrapStatus.cs" />
     <Compile Include="Model\TimeCode.cs" />
     <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />
     <Compile Include="ResponseParsers\IndexResponseParser.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
     <Compile Include="ResponseParsers\ResponseParseUtils.cs" />
     <Compile Include="ResponseParsers\ReWrapResponseParser.cs" />
+    <Compile Include="ResponseParsers\ReWrapStatusResponseParser.cs" />
     <Compile Include="ResponseParsers\XmlExtensions.cs" />
     <Compile Include="Runtime\IHttpWebRequest.cs" />
     <Compile Include="Runtime\IHttpWebResponse.cs" />

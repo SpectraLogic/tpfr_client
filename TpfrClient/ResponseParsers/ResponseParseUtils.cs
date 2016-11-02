@@ -69,5 +69,26 @@ namespace TpfrClient.ResponseParsers
                     return OffsetsResult.Unknown;
             }
         }
+
+        public static Phase? GetPhaseResult(string result)
+        {
+            if (result == null) return null;
+
+            switch (result)
+            {
+                case "Pending":
+                    return Phase.Pending;
+                case "Parsing":
+                    return Phase.Parsing;
+                case "Transferring":
+                    return Phase.Transferring;
+                case "Complete":
+                    return Phase.Complete;
+                case "Failed":
+                    return Phase.Failed;
+                default:
+                    return Phase.Unknown;
+            }
+        }
     }
 }

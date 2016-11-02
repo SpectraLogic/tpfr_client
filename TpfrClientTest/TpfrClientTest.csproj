@@ -86,6 +86,21 @@
   <ItemGroup>
     <EmbeddedResource Include="TestFiles\FileNotFoundOffsetsCall.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\JobPending.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\JobParsing.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\JobTransferring.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\JobComplete.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\JobFailed.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
