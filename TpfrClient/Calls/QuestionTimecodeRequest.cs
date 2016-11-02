@@ -14,19 +14,37 @@
  */
 
 using System;
-using System.Collections.Generic;
 using TpfrClient.Model;
 
 namespace TpfrClient.Calls
 {
     public class QuestionTimecodeRequest : RestRequest
     {
-        public QuestionTimecodeRequest(string clipName, string indexFilePath, IEnumerable<TimecodeRange> timecodes)
+        public QuestionTimecodeRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                QueryParams.Add("filepath", filePath);
+            }
+            else
+            {
+                throw new ArgumentNullException(filePath);
+            }
+
+            QueryParams.Add("tcin", firstFrame.Time);
+            QueryParams.Add("tcout", lastFrame.Time);
+
+            if (!string.IsNullOrWhiteSpace(frameRate))
+            {
+                QueryParams.Add("fileframerate", frameRate);
+            }
+            else
+            {
+                throw new ArgumentNullException(frameRate);
+            }
         }
 
-        internal override HttpVerb Verb { get; }
-        internal override string Path { get; }
+        internal override HttpVerb Verb => HttpVerb.GET;
+        internal override string Path => "fileoffsets";
     }
 }

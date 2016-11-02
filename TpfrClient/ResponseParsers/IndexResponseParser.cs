@@ -19,9 +19,9 @@ using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    public class IndexResponseParser : IResponseParser<Status>
+    public class IndexResponseParser : IResponseParser<IndexStatus>
     {
-        public Status Parse(IHttpWebResponse response)
+        public IndexStatus Parse(IHttpWebResponse response)
         {
             using (response)
             {
@@ -30,9 +30,9 @@ namespace TpfrClient.ResponseParsers
                 {
                     var element = XmlExtensions.ReadDocument(stream).ElementOrThrow("IndexerReport");
 
-                    return new Status
+                    return new IndexStatus
                     {
-                        IndexResult = ResponseParseUtils.GetResult(element.AttributeText("IndexResult")),
+                        IndexResult = ResponseParseUtils.GetIndexResult(element.AttributeText("IndexResult")),
                         IndexTime = element.AttributeTextOrNull("IndexTime"),
                         FileStartTc = element.AttributeTextOrNull("FileStartTC"),
                         FileDuration = element.AttributeTextOrNull("FileDuration"),

@@ -15,16 +15,16 @@
 
 namespace TpfrClient.Model
 {
-    public class Status
+    public class IndexStatus
     {
-        public Result IndexResult { get; set; }
+        public IndexResult IndexResult { get; set; }
         public string IndexTime { get; set; }
         public string FileStartTc { get; set; }
         public string FileDuration { get; set; }
         public string FileFrameRate { get; set; }
     }
 
-    public enum Result
+    public enum IndexResult
     {
         Failed,
         Succeeded,

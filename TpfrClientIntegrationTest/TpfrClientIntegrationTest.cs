@@ -47,7 +47,9 @@ namespace TpfrClientIntegrationTest
         [Test]
         public void TestQuestionTimecode()
         {
-            _client.QuestionTimecode(new QuestionTimecodeRequest("", "", new List<TimecodeRange>()));
+            var firstFrame = new TimeCode("00:00:10:00");
+            var lastFrame = new TimeCode("00:05:00:00");
+            _client.QuestionTimecode(new QuestionTimecodeRequest(@"C:\Media\SampleFile.mxf", firstFrame, lastFrame, "25"));
         }
 
         [Test]

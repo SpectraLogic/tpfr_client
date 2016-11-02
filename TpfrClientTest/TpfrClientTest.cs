@@ -37,7 +37,7 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexFile(new IndexFileRequest("filePath"));
 
-            Assert.AreEqual(Result.Failed, status.IndexResult);
+            Assert.AreEqual(IndexResult.Failed, status.IndexResult);
             Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
 
             mockNetwork.VerifyAll();
@@ -54,7 +54,7 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexFile(new IndexFileRequest("filePath"));
 
-            Assert.AreEqual(Result.Succeeded, status.IndexResult);
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
             Assert.AreEqual("2011/10/21 11:40:53", status.IndexTime);
             Assert.AreEqual("01:00:00;00", status.FileStartTc);
             Assert.AreEqual("1800", status.FileDuration);
@@ -74,7 +74,7 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexStatus(new IndexStatusRequest("filePath"));
 
-            Assert.AreEqual(Result.Failed, status.IndexResult);
+            Assert.AreEqual(IndexResult.Failed, status.IndexResult);
             Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
 
             mockNetwork.VerifyAll();
@@ -91,7 +91,7 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexStatus(new IndexStatusRequest("filePath"));
 
-            Assert.AreEqual(Result.Succeeded, status.IndexResult);
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
             Assert.AreEqual("2011/10/21 11:40:53", status.IndexTime);
             Assert.AreEqual("01:00:00;00", status.FileStartTc);
             Assert.AreEqual("1800", status.FileDuration);
@@ -111,7 +111,7 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexStatus(new IndexStatusRequest("filePath"));
 
-            Assert.AreEqual(Result.ErrorFileNotFound, status.IndexResult);
+            Assert.AreEqual(IndexResult.ErrorFileNotFound, status.IndexResult);
 
             mockNetwork.VerifyAll();
         }
@@ -127,15 +127,47 @@ namespace TpfrClientTest
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexStatus(new IndexStatusRequest("filePath"));
 
-            Assert.AreEqual(Result.NotIndexed, status.IndexResult);
+            Assert.AreEqual(IndexResult.NotIndexed, status.IndexResult);
 
             mockNetwork.VerifyAll();
         }
 
         [Test]
-        public void TestQuestionTimecode()
+        public void TestSucceededQuestionTimecode()
         {
-            //client.QuestionTimecode(new QuestionTimecodeRequest(null, null, null));
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.GoodFileOffsetsCall.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.QuestionTimecode(
+                new QuestionTimecodeRequest(
+                    "filePath", new TimeCode("00:00:00:00"), new TimeCode("00:00:00:00"), "00"));
+
+            Assert.AreEqual(OffsetsResult.Succeeded, status.OffsetsResult);
+            Assert.AreEqual("0x0060000", status.InBytes);
+            Assert.AreEqual("0x0080000", status.OutBytes);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
+        public void TestFileNotFoundQuestionTimecode()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileNotFoundOffsetsCall.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.QuestionTimecode(
+                new QuestionTimecodeRequest(
+                    "filePath", new TimeCode("00:00:00:00"), new TimeCode("00:00:00:00"), "00"));
+
+            Assert.AreEqual(OffsetsResult.ErrorFileNotFound, status.OffsetsResult);
+
+            mockNetwork.VerifyAll();
         }
 
         [Test]

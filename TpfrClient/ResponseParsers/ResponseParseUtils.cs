@@ -40,20 +40,33 @@ namespace TpfrClient.ResponseParsers
                 return reader.ReadToEnd();
         }
 
-        public static Result GetResult(string result)
+        public static IndexResult GetIndexResult(string result)
         {
             switch (result)
             {
                 case "Succeeded":
-                    return Result.Succeeded;
+                    return IndexResult.Succeeded;
                 case "Failed":
-                    return Result.Failed;
+                    return IndexResult.Failed;
                 case "Error File Not Found":
-                    return Result.ErrorFileNotFound;
+                    return IndexResult.ErrorFileNotFound;
                 case "Not Indexed":
-                    return Result.NotIndexed;
+                    return IndexResult.NotIndexed;
                 default:
-                    return Result.Unknown;
+                    return IndexResult.Unknown;
+            }
+        }
+
+        public static OffsetsResult GetOffsetsResult(string result)
+        {
+            switch (result)
+            {
+                case "Succeeded":
+                    return OffsetsResult.Succeeded;
+                case "Error File Not Found":
+                    return OffsetsResult.ErrorFileNotFound;
+                default:
+                    return OffsetsResult.Unknown;
             }
         }
     }

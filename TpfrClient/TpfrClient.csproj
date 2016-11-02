@@ -44,6 +44,8 @@
     <Compile Include="Calls\IndexStatusRequest.cs" />
     <Compile Include="Calls\QuestionTimecodeRequest.cs" />
     <Compile Include="Calls\ReWrapRequest.cs" />
+    <Compile Include="Model\OffsetsStatus.cs" />
+    <Compile Include="Model\TimeCode.cs" />
     <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />
     <Compile Include="ResponseParsers\IndexResponseParser.cs" />
     <Compile Include="ResponseParsers\IndexStatusResponseParser.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="Runtime\Network.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Range.cs" />
-    <Compile Include="Model\Status.cs" />
+    <Compile Include="Model\IndexStatus.cs" />
     <Compile Include="Model\TimecodeRange.cs" />
   </ItemGroup>
   <ItemGroup>

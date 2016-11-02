@@ -13,17 +13,30 @@
  * ****************************************************************************
  */
 
-using System.Collections.Generic;
-using TpfrClient.Calls;
-using TpfrClient.Model;
+using System;
+using System.Text.RegularExpressions;
 
-namespace TpfrClient
+namespace TpfrClient.Model
 {
-    public interface ITpfrClient
+    public class TimeCode
     {
-        IndexStatus IndexFile(IndexFileRequest request);
-        IndexStatus IndexStatus(IndexStatusRequest request);
-        OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request);
-        void ReWrap(ReWrapRequest request);
+        public string Time { get; private set; }
+        public TimeCode(string timeCode)
+        {
+            if (!IsValidFormat(timeCode))
+            {
+                throw new ArgumentException("The format of the time code is not valid. Time code format should be in form hh:mm:ss:ff for non-drop framerates and hh:mm:ss;ff for drop framerates.");
+            }
+
+            Time = timeCode;
+        }
+
+        private static bool IsValidFormat(string timeCode)
+        {
+            var regex = new Regex("[0-9][0-9]:[0-9][0-9]:[0-9][0-9][:;][0-9][0-9]");
+            var match = regex.Match(timeCode);
+
+            return match.Success;
+        }
     }
 }

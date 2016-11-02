@@ -13,17 +13,19 @@
  * ****************************************************************************
  */
 
-using System.Collections.Generic;
-using TpfrClient.Calls;
-using TpfrClient.Model;
-
-namespace TpfrClient
+namespace TpfrClient.Model
 {
-    public interface ITpfrClient
+    public class OffsetsStatus
     {
-        IndexStatus IndexFile(IndexFileRequest request);
-        IndexStatus IndexStatus(IndexStatusRequest request);
-        OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request);
-        void ReWrap(ReWrapRequest request);
+        public OffsetsResult OffsetsResult { get; set; }
+        public string InBytes { get; set; }
+        public string OutBytes { get; set; }
+    }
+
+    public enum OffsetsResult
+    {
+        Succeeded,
+        ErrorFileNotFound,
+        Unknown
     }
 }

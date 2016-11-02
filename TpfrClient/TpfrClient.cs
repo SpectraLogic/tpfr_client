@@ -42,17 +42,17 @@ namespace TpfrClient
             return this;
         }
 
-        public Status IndexFile(IndexFileRequest request)
+        public IndexStatus IndexFile(IndexFileRequest request)
         {
             return new IndexFileResponseParser().Parse(_network.Invoke(request));
         }
 
-        public Status IndexStatus(IndexStatusRequest request)
+        public IndexStatus IndexStatus(IndexStatusRequest request)
         {
             return new IndexStatusResponseParser().Parse(_network.Invoke(request));
         }
 
-        public IEnumerable<ByteRange> QuestionTimecode(QuestionTimecodeRequest request)
+        public OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request)
         {
             return new QuestionTimecodeResponseParser().Parse(_network.Invoke(request));
         }

@@ -13,18 +13,31 @@
  * ****************************************************************************
  */
 
-using System;
-using System.Collections.Generic;
+using System.Net;
 using TpfrClient.Model;
 using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    internal class QuestionTimecodeResponseParser : IResponseParser<IEnumerable<ByteRange>>
+    internal class QuestionTimecodeResponseParser : IResponseParser<OffsetsStatus>
     {
-        public IEnumerable<ByteRange> Parse(IHttpWebResponse response)
+        public OffsetsStatus Parse(IHttpWebResponse response)
         {
-            throw new NotImplementedException();
+            using (response)
+            {
+                ResponseParseUtils.HandleStatusCode(response, (HttpStatusCode)200);
+                using (var stream = response.GetResponseStream())
+                {
+                    var element = XmlExtensions.ReadDocument(stream).ElementOrThrow("fileoffsetvalues");
+
+                    return new OffsetsStatus
+                    {
+                        OffsetsResult = ResponseParseUtils.GetOffsetsResult(element.AttributeText("fileoffsetsResult")),
+                        InBytes = element.AttributeTextOrNull("in_bytes"),
+                        OutBytes= element.AttributeTextOrNull("out_bytes"),
+                    };
+                }
+            }
         }
     }
 }
