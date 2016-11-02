@@ -13,22 +13,13 @@
  * ****************************************************************************
  */
 
-using System;
-
 namespace TpfrClient.Calls
 {
-    public sealed class IndexFileRequest : RestRequest
+    public class IndexFileRequest : RestRequest
     {
         public IndexFileRequest(string filePath)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
+            AddQueryParam("filepath", filePath);
         }
 
         internal override HttpVerb Verb => HttpVerb.GET;

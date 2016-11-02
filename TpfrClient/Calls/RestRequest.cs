@@ -13,24 +13,35 @@
  * ****************************************************************************
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace TpfrClient.Calls
 {
     public abstract class RestRequest
     {
-        internal abstract HttpVerb Verb
-        {
-            get;
-        }
+        internal abstract HttpVerb Verb { get; }
 
-        internal abstract string Path
-        {
-            get;
-        }
+        internal abstract string Path { get; }
 
-        internal virtual Dictionary<string, string> QueryParams { get; } = new Dictionary<string, string>();
+        internal Dictionary<string, string> QueryParams { get; } = new Dictionary<string, string>();
+
+        protected void AddQueryParam(string key, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                QueryParams.Add(key, value);
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
+        }
     }
 
-    internal enum HttpVerb { GET, PUT, POST, DELETE, HEAD, PATCH };
+    internal enum HttpVerb
+    {
+        GET,
+        PUT
+    };
 }

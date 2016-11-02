@@ -13,7 +13,6 @@
  * ****************************************************************************
  */
 
-using System;
 using TpfrClient.Model;
 
 namespace TpfrClient.Calls
@@ -22,26 +21,10 @@ namespace TpfrClient.Calls
     {
         public QuestionTimecodeRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException(filePath);
-            }
-
-            QueryParams.Add("tcin", firstFrame.Time);
-            QueryParams.Add("tcout", lastFrame.Time);
-
-            if (!string.IsNullOrWhiteSpace(frameRate))
-            {
-                QueryParams.Add("fileframerate", frameRate);
-            }
-            else
-            {
-                throw new ArgumentNullException(frameRate);
-            }
+            AddQueryParam("filepath", filePath);
+            AddQueryParam("tcin", firstFrame.Time);
+            AddQueryParam("tcout", lastFrame.Time);
+            AddQueryParam("fileframerate", frameRate);
         }
 
         internal override HttpVerb Verb => HttpVerb.GET;

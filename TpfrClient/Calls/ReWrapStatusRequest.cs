@@ -13,22 +13,13 @@
  * ****************************************************************************
  */
 
-using System;
-
 namespace TpfrClient.Calls
 {
     public class ReWrapStatusRequest : RestRequest
     {
         public ReWrapStatusRequest(string outputFileName)
         {
-            if (!string.IsNullOrWhiteSpace(outputFileName))
-            {
-                QueryParams.Add("targetpartialname", outputFileName);
-            }
-            else
-            {
-                throw new ArgumentNullException(outputFileName);
-            }
+            AddQueryParam("targetpartialname", outputFileName);
         }
 
         internal override HttpVerb Verb => HttpVerb.GET;

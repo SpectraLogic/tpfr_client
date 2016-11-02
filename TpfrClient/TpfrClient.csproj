@@ -62,15 +62,12 @@
     <Compile Include="Runtime\TpfrHttpWebRequest.cs" />
     <Compile Include="Runtime\TpfrHttpWebResponse.cs" />
     <Compile Include="TpfrClient.cs" />
-    <Compile Include="Model\ByteRange.cs" />
     <Compile Include="ITpfrClient.cs" />
     <Compile Include="Calls\RestRequest.cs" />
     <Compile Include="Runtime\INetwork.cs" />
     <Compile Include="Runtime\Network.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Range.cs" />
     <Compile Include="Model\IndexStatus.cs" />
-    <Compile Include="Model\TimecodeRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SpectraLogic.licenseheader" />

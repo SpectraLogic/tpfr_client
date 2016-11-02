@@ -13,72 +13,23 @@
  * ****************************************************************************
  */
 
-using System;
 using TpfrClient.Model;
 
 namespace TpfrClient.Calls
 {
     public class ReWrapRequest : RestRequest
     {
-        public ReWrapRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate, string inByte, string outByte, string partialRestoreFilePath, string outputFileName)
+        public ReWrapRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate, string inByte,
+            string outByte, string partialRestoreFilePath, string outputFileName)
         {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                QueryParams.Add("filepath", filePath);
-            }
-            else
-            {
-                throw new ArgumentNullException(filePath);
-            }
-
-            QueryParams.Add("tcin", firstFrame.Time);
-            QueryParams.Add("tcout", lastFrame.Time);
-
-            if (!string.IsNullOrWhiteSpace(frameRate))
-            {
-                QueryParams.Add("fileframerate", frameRate);
-            }
-            else
-            {
-                throw new ArgumentNullException(frameRate);
-            }
-
-            if (!string.IsNullOrWhiteSpace(inByte))
-            {
-                QueryParams.Add("in_byte", inByte);
-            }
-            else
-            {
-                throw new ArgumentNullException(inByte);
-            }
-
-            if (!string.IsNullOrWhiteSpace(outByte))
-            {
-                QueryParams.Add("out_byte", outByte);
-            }
-            else
-            {
-                throw new ArgumentNullException(outByte);
-            }
-
-            if (!string.IsNullOrWhiteSpace(partialRestoreFilePath))
-            {
-                QueryParams.Add("part_file", partialRestoreFilePath);
-            }
-            else
-            {
-                throw new ArgumentNullException(partialRestoreFilePath);
-            }
-
-            if (!string.IsNullOrWhiteSpace(outputFileName))
-            {
-                QueryParams.Add("out_fileName", outputFileName);
-            }
-            else
-            {
-                throw new ArgumentNullException(outputFileName);
-            }
-
+            AddQueryParam("filepath", filePath);
+            AddQueryParam("tcin", firstFrame.Time);
+            AddQueryParam("tcout", lastFrame.Time);
+            AddQueryParam("fileframerate", frameRate);
+            AddQueryParam("in_byte", inByte);
+            AddQueryParam("out_byte", outByte);
+            AddQueryParam("part_file", partialRestoreFilePath);
+            AddQueryParam("out_fileName", outputFileName);
         }
 
         internal override HttpVerb Verb => HttpVerb.PUT;

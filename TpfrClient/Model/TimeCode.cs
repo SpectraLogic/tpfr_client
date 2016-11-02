@@ -20,16 +20,18 @@ namespace TpfrClient.Model
 {
     public class TimeCode
     {
-        public string Time { get; private set; }
         public TimeCode(string timeCode)
         {
             if (!IsValidFormat(timeCode))
             {
-                throw new ArgumentException("The format of the time code is not valid. Time code format should be in form hh:mm:ss:ff for non-drop framerates and hh:mm:ss;ff for drop framerates.");
+                throw new ArgumentException(
+                    "The format of the time code is not valid. Time code format should be in form hh:mm:ss:ff for non-drop framerates and hh:mm:ss;ff for drop framerates.");
             }
 
             Time = timeCode;
         }
+
+        public string Time { get; private set; }
 
         private static bool IsValidFormat(string timeCode)
         {
