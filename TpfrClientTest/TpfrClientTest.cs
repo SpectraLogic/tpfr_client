@@ -263,5 +263,21 @@ namespace TpfrClientTest
 
             mockNetwork.VerifyAll();
         }
+
+        [Test]
+        public void TesReWrapError()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.PartialFileStatusError.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.ReWrapStatus(new ReWrapStatusRequest("outputFileName"));
+
+            Assert.AreEqual("Job not found", status.Error);
+
+            mockNetwork.VerifyAll();
+        }
     }
 }
