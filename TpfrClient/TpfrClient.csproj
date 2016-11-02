@@ -52,6 +52,7 @@
     <Compile Include="ResponseParsers\IResponseParser.cs" />
     <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
     <Compile Include="ResponseParsers\ResponseParseUtils.cs" />
+    <Compile Include="ResponseParsers\ReWrapResponseParser.cs" />
     <Compile Include="ResponseParsers\XmlExtensions.cs" />
     <Compile Include="Runtime\IHttpWebRequest.cs" />
     <Compile Include="Runtime\IHttpWebResponse.cs" />

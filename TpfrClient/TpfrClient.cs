@@ -59,7 +59,7 @@ namespace TpfrClient
 
         public void ReWrap(ReWrapRequest request)
         {
-            _network.Invoke(request);
+            new ReWrapResponseParser().Parse(_network.Invoke(request));
         }
     }
 }

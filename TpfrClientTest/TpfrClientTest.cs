@@ -207,7 +207,35 @@ namespace TpfrClientTest
         [Test]
         public void TestReWrap()
         {
-            //client.ReWrap(new ReWrapRequest(null, null, null));
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            client.ReWrap(
+                new ReWrapRequest(
+                    "filePath", new TimeCode("00:00:00:00"), new TimeCode("00:00:00:00"), "00",
+                    "0x0060000", "0x0080000", "partialFilePath", "outputFileName"));
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
+        public void TestFailedReWrap()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("", HttpStatusCode.BadRequest));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            Assert.Throws<Exception>(() => client.ReWrap(
+                new ReWrapRequest(
+                    "filePath", new TimeCode("00:00:00:00"), new TimeCode("00:00:00:00"), "00",
+                    "0x0060000", "0x0080000", "partialFilePath", "outputFileName")));
+
+            mockNetwork.VerifyAll();
         }
     }
 }

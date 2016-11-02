@@ -55,7 +55,9 @@ namespace TpfrClientIntegrationTest
         [Test]
         public void TestReWrap()
         {
-            _client.ReWrap(new ReWrapRequest("", "", new List<TimecodeRange>()));
+            var firstFrame = new TimeCode("00:00:10:00");
+            var lastFrame = new TimeCode("00:05:00:00");
+            _client.ReWrap(new ReWrapRequest(@"C:\Media\SampleFile.mxf", firstFrame, lastFrame, "25", "0x0060000", "0x0080000", @"C:\Media\PartialSampleFile.mfx", "PartSampleFile.mfx"));
         }
     }
 }

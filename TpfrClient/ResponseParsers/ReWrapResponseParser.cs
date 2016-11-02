@@ -13,34 +13,20 @@
  * ****************************************************************************
  */
 
-using System.IO;
 using System.Net;
-using System.Reflection;
-using System.Text;
 using TpfrClient.Runtime;
 
-namespace TpfrClientTest.Mock
+namespace TpfrClient.ResponseParsers
 {
-    public class MockHttpWebResponse : IHttpWebResponse
+    public class ReWrapResponseParser : IResponseParser<object>
     {
-        private readonly string _resourceName;
-        public MockHttpWebResponse(string resourceName, HttpStatusCode statusCode)
+        public object Parse(IHttpWebResponse response)
         {
-            _resourceName = resourceName;
-            StatusCode = statusCode;
+            using (response)
+            {
+                ResponseParseUtils.HandleStatusCode(response, (HttpStatusCode)200);
+                return null;
+            }
         }
-
-        public void Dispose()
-        {
-        }
-
-        public Stream GetResponseStream()
-        {
-            return string.IsNullOrEmpty(_resourceName) ? 
-                new MemoryStream(Encoding.UTF8.GetBytes("The HTTP request failed")) : 
-                Assembly.GetExecutingAssembly().GetManifestResourceStream(_resourceName);
-        }
-
-        public HttpStatusCode StatusCode { get; }
     }
 }
