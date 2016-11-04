@@ -46,7 +46,7 @@ namespace TpfrClient.Runtime
         public IHttpWebResponse Invoke(RestRequest request)
         {
             var httpWebRequest = CreateHttpWebRequest(request);
-            return new TpfrHttpWebResponse((HttpWebResponse)httpWebRequest.GetResponse());
+            return httpWebRequest.GetResponse();
         }
 
         private IHttpWebRequest CreateHttpWebRequest(RestRequest request)
