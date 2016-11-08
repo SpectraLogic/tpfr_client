@@ -63,6 +63,13 @@ namespace TpfrClientIntegrationTest
         }
 
         [Test]
+        public void TestNotIndexedFileStatus()
+        {
+            var status = _client.FileStatus(new FileStatusRequest($"{_path}not_indexed.mov"));
+            Assert.AreEqual(IndexResult.NotIndexed, status.IndexResult);
+        }
+
+        [Test]
         public void TestErrorFileNotFoundFileStatus()
         {
             var status = _client.FileStatus(new FileStatusRequest($"{_path}not_found.mov"));
