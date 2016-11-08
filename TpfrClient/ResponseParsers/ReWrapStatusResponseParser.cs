@@ -19,7 +19,7 @@ using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    public class ReWrapStatusResponseParser : IResponseParser<ReWrapStatus>
+    internal class ReWrapStatusResponseParser : IResponseParser<ReWrapStatus>
     {
         public ReWrapStatus Parse(IHttpWebResponse response)
         {

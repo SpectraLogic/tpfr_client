@@ -22,7 +22,7 @@ using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    public static class ResponseParseUtils
+    internal static class ResponseParseUtils
     {
         public static void HandleStatusCode(IHttpWebResponse response, params HttpStatusCode[] expectedStatusCodes)
         {

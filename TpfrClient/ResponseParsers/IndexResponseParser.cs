@@ -19,7 +19,7 @@ using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    public class IndexResponseParser : IResponseParser<IndexStatus>
+    internal class IndexResponseParser : IResponseParser<IndexStatus>
     {
         public IndexStatus Parse(IHttpWebResponse response)
         {
