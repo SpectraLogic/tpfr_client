@@ -15,6 +15,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Net;
 using NUnit.Framework;
 using TpfrClient;
 using TpfrClient.Calls;
@@ -26,35 +28,62 @@ namespace TpfrClientIntegrationTest
     public class TpfrClientIntegrationTest
     {
         private ITpfrClient _client;
+        private string _path;
+
         [SetUp]
         public void Setup()
         {
-            _client = new TpfrClient.TpfrClient("HostServerName", 60792).WithProxy(new Uri("http://localhost:8888"));
+            _client = new TpfrClient.TpfrClient(
+                ConfigurationManager.AppSettings["HostName"],
+                int.Parse(ConfigurationManager.AppSettings["Port"]))
+                .WithProxy(ConfigurationManager.AppSettings["Proxy"]);
+
+            _path = ConfigurationManager.AppSettings["Path"];
         }
 
         [Test]
-        public void TestFileIndex()
+        public void TestOkFileIndex()
         {
-            _client.IndexFile(new IndexFileRequest(@"C:\Media\SampleFile.mxf"));
+            var status = _client.IndexFile(new IndexFileRequest($"{_path}ok.mov"));
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
         }
 
         [Test]
-        public void TestFileStatus()
+        public void TestFailedFileIndex()
         {
-            _client.IndexStatus(new IndexStatusRequest(@"C:\Media\SampleFile.mxf"));
+            var status = _client.IndexFile(new IndexFileRequest($"{_path}error_file.xmf"));
+            Assert.AreEqual(IndexResult.Failed, status.IndexResult);
+        }
+
+        [Test]
+        public void TestOkFileStatus()
+        {
+            var status = _client.FileStatus(new FileStatusRequest($"{_path}ok.mov"));
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
+        }
+
+        [Test]
+        public void TestErrorFileNotFoundFileStatus()
+        {
+            var status = _client.FileStatus(new FileStatusRequest($"{_path}not_found.mov"));
+            Assert.AreEqual(IndexResult.ErrorFileNotFound, status.IndexResult);
         }
 
         [Test]
         public void TestQuestionTimecode()
         {
-            var firstFrame = new TimeCode("00:00:10:00");
-            var lastFrame = new TimeCode("00:05:00:00");
-            _client.QuestionTimecode(new QuestionTimecodeRequest(@"C:\Media\SampleFile.mxf", firstFrame, lastFrame, "25"));
+            Assert.Ignore();
+
+            var firstFrame = new TimeCode("00:00:00:00");
+            var lastFrame = new TimeCode("00:00:10:00");
+            _client.QuestionTimecode(new QuestionTimecodeRequest(@"C:\Users\sharons\Videos\tpft\SampleFile.mov", firstFrame, lastFrame, "30"));
         }
 
         [Test]
         public void TestReWrap()
         {
+            Assert.Ignore();
+
             var firstFrame = new TimeCode("00:00:10:00");
             var lastFrame = new TimeCode("00:05:00:00");
             _client.ReWrap(new ReWrapRequest(@"C:\Media\SampleFile.mxf", firstFrame, lastFrame, "25", "0x0060000", "0x0080000", @"C:\Media\PartialSampleFile.mfx", "PartSampleFile"));
@@ -63,6 +92,8 @@ namespace TpfrClientIntegrationTest
         [Test]
         public void TestReWrapStatus()
         {
+            Assert.Ignore();
+
             _client.ReWrapStatus(new ReWrapStatusRequest("PartSampleFile"));
         }
     }

@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calls\IndexFileRequest.cs" />
-    <Compile Include="Calls\IndexStatusRequest.cs" />
+    <Compile Include="Calls\FileStatusRequest.cs" />
     <Compile Include="Calls\QuestionTimecodeRequest.cs" />
     <Compile Include="Calls\ReWrapRequest.cs" />
     <Compile Include="Calls\ReWrapStatusRequest.cs" />
@@ -50,7 +50,7 @@
     <Compile Include="Model\TimeCode.cs" />
     <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />
     <Compile Include="ResponseParsers\IndexResponseParser.cs" />
-    <Compile Include="ResponseParsers\IndexStatusResponseParser.cs" />
+    <Compile Include="ResponseParsers\FileStatusResponseParser.cs" />
     <Compile Include="ResponseParsers\IResponseParser.cs" />
     <Compile Include="ResponseParsers\QuestionTimecodeResponseParser.cs" />
     <Compile Include="ResponseParsers\ResponseParseUtils.cs" />

@@ -13,9 +13,20 @@
  * ****************************************************************************
  */
 
-namespace TpfrClient.ResponseParsers
+namespace TpfrClient.Calls
 {
-    internal class IndexStatusResponseParser : IndexResponseParser
+    public class FileStatusRequest : RestRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">The full path (via a mapped drive on the StorNext MDC) to the media file whose status is to be retrieved.</param>
+        public FileStatusRequest(string filePath)
+        {
+            AddQueryParam("filepath", filePath);
+        }
+
+        internal override HttpVerb Verb => HttpVerb.GET;
+        internal override string Path => "filestatus";
     }
 }

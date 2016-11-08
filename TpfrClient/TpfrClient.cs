@@ -35,7 +35,11 @@ namespace TpfrClient
             _network = network;
         }
 
-        public TpfrClient WithProxy(Uri proxy)
+        public TpfrClient WithProxy(string proxy)
+        {
+            return !string.IsNullOrEmpty(proxy) ? WithProxy(new Uri(proxy)) : this;
+        }
+        private TpfrClient WithProxy(Uri proxy)
         {
             _network.WithProxy(proxy);
             return this;
@@ -46,9 +50,9 @@ namespace TpfrClient
             return new IndexFileResponseParser().Parse(_network.Invoke(request));
         }
 
-        public IndexStatus IndexStatus(IndexStatusRequest request)
+        public IndexStatus FileStatus(FileStatusRequest request)
         {
-            return new IndexStatusResponseParser().Parse(_network.Invoke(request));
+            return new FileStatusResponseParser().Parse(_network.Invoke(request));
         }
 
         public OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request)

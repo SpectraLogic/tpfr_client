@@ -37,10 +37,10 @@ namespace TpfrClient
         /// The Web Service will support multiple concurrent calls to this API call.
         /// </summary>
         /// <param name="request">
-        /// <seealso cref="IndexStatusRequest"/>
+        /// <seealso cref="FileStatusRequest"/>
         /// </param>
         /// <returns></returns>
-        IndexStatus IndexStatus(IndexStatusRequest request);
+        IndexStatus FileStatus(FileStatusRequest request);
 
         /// <summary>
         /// This method will block whilst retrieving the start and end byte offsets for the requested timecodes. The offsets are extended in order to handle GOP and interleave ordering.

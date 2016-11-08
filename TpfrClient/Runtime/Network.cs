@@ -23,10 +23,6 @@ namespace TpfrClient.Runtime
 {
     public class Network : INetwork
     {
-        private const int ReadWriteTimeout = 60 * 60 * 1000;
-        private const int RequestTimeout = 60 * 60 * 1000;
-        private const int ConnectionLimit = 12;
-
         public Network(string hostServerName, int hostServerPort)
         {
             HostServerName = hostServerName;
@@ -59,10 +55,9 @@ namespace TpfrClient.Runtime
             };
 
 
-            var httpRequest = (HttpWebRequest) WebRequest.Create(uriBuilder.ToString());
-            httpRequest.ServicePoint.ConnectionLimit = ConnectionLimit;
+            var httpRequest = (HttpWebRequest) WebRequest.Create(uriBuilder.Uri);
             httpRequest.Method = request.Verb.ToString();
-
+            
             if (Proxy != null)
             {
                 var webProxy = new WebProxy
@@ -74,8 +69,6 @@ namespace TpfrClient.Runtime
 
             httpRequest.Date = DateTime.UtcNow;
             httpRequest.Host = CreateHostString();
-            httpRequest.ReadWriteTimeout = ReadWriteTimeout;
-            httpRequest.Timeout = RequestTimeout;
 
             return new TpfrHttpWebRequest(httpRequest);
         }

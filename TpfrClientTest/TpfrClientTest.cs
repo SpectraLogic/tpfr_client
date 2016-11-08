@@ -73,7 +73,7 @@ namespace TpfrClientTest
                 .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FailedToIndex.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
-            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+            var status = client.FileStatus(new FileStatusRequest("filePath"));
 
             Assert.AreEqual(IndexResult.Failed, status.IndexResult);
             Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
@@ -82,7 +82,7 @@ namespace TpfrClientTest
         }
 
         [Test]
-        public void TestSuccessfulIndexStatus()
+        public void TestSuccessfulFileStatus()
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
@@ -90,7 +90,7 @@ namespace TpfrClientTest
                 .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.SuccessfulIndexFileOrFileStatusCall.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
-            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+            var status = client.FileStatus(new FileStatusRequest("filePath"));
 
             Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
             Assert.AreEqual("2011/10/21 11:40:53", status.IndexTime);
@@ -102,7 +102,7 @@ namespace TpfrClientTest
         }
 
         [Test]
-        public void TestFileNotFoundIndexStatus()
+        public void TestFileNotFoundFileStatus()
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
@@ -110,7 +110,7 @@ namespace TpfrClientTest
                 .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotPresent.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
-            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+            var status = client.FileStatus(new FileStatusRequest("filePath"));
 
             Assert.AreEqual(IndexResult.ErrorFileNotFound, status.IndexResult);
 
@@ -118,7 +118,7 @@ namespace TpfrClientTest
         }
 
         [Test]
-        public void TestFileNotIndexedIndexStatus()
+        public void TestFileNotIndexedFileStatus()
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
@@ -126,7 +126,7 @@ namespace TpfrClientTest
                 .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotIndexed.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
-            var status = client.IndexStatus(new IndexStatusRequest("filePath"));
+            var status = client.FileStatus(new FileStatusRequest("filePath"));
 
             Assert.AreEqual(IndexResult.NotIndexed, status.IndexResult);
 
