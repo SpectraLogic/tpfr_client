@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileStatusExample.cs" />
     <Compile Include="IndexFileExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
