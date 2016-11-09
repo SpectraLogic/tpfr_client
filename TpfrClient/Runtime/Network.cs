@@ -69,6 +69,7 @@ namespace TpfrClient.Runtime
 
             httpRequest.Date = DateTime.UtcNow;
             httpRequest.Host = CreateHostString();
+            httpRequest.UserAgent = "Spectra Tpfr";
 
             return new TpfrHttpWebRequest(httpRequest);
         }
