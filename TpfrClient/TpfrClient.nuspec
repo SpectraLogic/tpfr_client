@@ -5,7 +5,7 @@
     <version>0.1.0</version>
     <authors>SpectraLogic</authors>
     <language>en-US</language>
-    <description>TpfrClient</description>
+    <description>Time based Partial File Recovery Client</description>
   </metadata>
   <files>
     <file src="Bin\Release\TpfrClient.dll" target="lib\Net452" />
