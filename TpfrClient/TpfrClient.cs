@@ -55,18 +55,24 @@ namespace TpfrClient
             return new FileStatusResponseParser().Parse(_network.Invoke(request));
         }
 
+        [Obsolete("Not Implemented")]
         public OffsetsStatus QuestionTimecode(QuestionTimecodeRequest request)
         {
+            throw new NotImplementedException();
             return new QuestionTimecodeResponseParser().Parse(_network.Invoke(request));
         }
 
+        [Obsolete("Not Implemented")]
         public void ReWrap(ReWrapRequest request)
         {
+            throw new NotImplementedException();
             new ReWrapResponseParser().Parse(_network.Invoke(request));
         }
 
+        [Obsolete("Not Implemented")]
         public ReWrapStatus ReWrapStatus(ReWrapStatusRequest request)
         {
+            throw new NotImplementedException();
             return new ReWrapStatusResponseParser().Parse(_network.Invoke(request));
         }
     }
