@@ -14,6 +14,7 @@
  */
 
 using System;
+using TpfrClient;
 using TpfrClient.Calls;
 using TpfrClient.Model;
 
@@ -28,7 +29,7 @@ namespace TpfrExamples
             const string proxy = ""; //you can provide a proxy
 
             // Create the client using the host name and the port where the Indexer 
-            var client = new TpfrClient.TpfrClient(hostName, port)
+            ITpfrClient client = new TpfrClient.TpfrClient(hostName, port)
                 .WithProxy(proxy);
 
             /*

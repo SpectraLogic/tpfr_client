@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>TpfrClient</id>
+    <version>0.1.0</version>
+    <authors>SpectraLogic</authors>
+    <language>en-US</language>
+    <description>TpfrClient</description>
+  </metadata>
+  <files>
+    <file src="Bin\Release\TpfrClient.dll" target="lib\Net452" />
+    <file src="Bin\Release\TpfrClient.xml" target="lib\Net452" />
+  </files>
+</package>
