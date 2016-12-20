@@ -1,14 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <package>
   <metadata>
-    <id>TpfrClient</id>
-    <version>0.1.0</version>
-    <authors>SpectraLogic</authors>
-    <language>en-US</language>
-    <description>Time based Partial File Recovery Client</description>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/SpectraLogic/tpfr_client/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/SpectraLogic/tpfr_client</projectUrl>
+    <iconUrl>https://avatars2.githubusercontent.com/u/7060807?v=2&amp;s=200</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016</copyright>
   </metadata>
-  <files>
-    <file src="Bin\Release\TpfrClient.dll" target="lib\Net452" />
-    <file src="Bin\Release\TpfrClient.xml" target="lib\Net452" />
-  </files>
 </package>
