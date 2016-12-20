@@ -13,10 +13,7 @@
  * ****************************************************************************
  */
 
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Net;
 using NUnit.Framework;
 using TpfrClient;
 using TpfrClient.Calls;
@@ -27,39 +24,40 @@ namespace TpfrClientIntegrationTest
     [TestFixture]
     public class TpfrClientIntegrationTest
     {
-        private ITpfrClient _client;
-        private string _path;
-
         [SetUp]
         public void Setup()
         {
             _client = new TpfrClient.TpfrClient(
-                ConfigurationManager.AppSettings["HostName"],
-                int.Parse(ConfigurationManager.AppSettings["Port"]))
+                    ConfigurationManager.AppSettings["HostName"],
+                    int.Parse(ConfigurationManager.AppSettings["Port"]))
                 .WithProxy(ConfigurationManager.AppSettings["Proxy"]);
 
             _path = ConfigurationManager.AppSettings["Path"];
         }
 
+        private ITpfrClient _client;
+        private string _path;
+
         [Test]
-        public void TestOkFileIndex()
+        public void TestErrorFileNotFoundFileStatus()
         {
-            var status = _client.IndexFile(new IndexFileRequest($"{_path}ok.mov"));
-            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
+            var status = _client.FileStatus(new FileStatusRequest($"{_path}not_found.mov"));
+            Assert.AreEqual(IndexResult.ErrorFileNotFound, status.IndexResult);
+        }
+
+        [Test]
+        public void TestErrorReWrapStatus()
+        {
+            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("JobNotFound"));
+            Assert.AreEqual(null, reWrapStatus.Phase);
+            Assert.AreEqual("Job not found", reWrapStatus.Error);
         }
 
         [Test]
         public void TestFailedFileIndex()
         {
-            var status = _client.IndexFile(new IndexFileRequest($"{_path}error_file.xmf"));
+            var status = _client.IndexFile(new IndexFileRequest($"{_path}error.mov"));
             Assert.AreEqual(IndexResult.Failed, status.IndexResult);
-        }
-
-        [Test]
-        public void TestOkFileStatus()
-        {
-            var status = _client.FileStatus(new FileStatusRequest($"{_path}ok.mov"));
-            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
         }
 
         [Test]
@@ -70,38 +68,70 @@ namespace TpfrClientIntegrationTest
         }
 
         [Test]
-        public void TestErrorFileNotFoundFileStatus()
+        public void TestOkFileIndex()
         {
-            var status = _client.FileStatus(new FileStatusRequest($"{_path}not_found.mov"));
-            Assert.AreEqual(IndexResult.ErrorFileNotFound, status.IndexResult);
+            var status = _client.IndexFile(new IndexFileRequest($"{_path}sample.mov"));
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
+        }
+
+        [Test]
+        public void TestOkFileStatus()
+        {
+            var status = _client.FileStatus(new FileStatusRequest($"{_path}sample.mov"));
+            Assert.AreEqual(IndexResult.Succeeded, status.IndexResult);
         }
 
         [Test]
         public void TestQuestionTimecode()
         {
-            Assert.Ignore();
-
             var firstFrame = new TimeCode("00:00:00:00");
             var lastFrame = new TimeCode("00:00:10:00");
-            _client.QuestionTimecode(new QuestionTimecodeRequest(@"C:\Users\sharons\Videos\tpft\SampleFile.mov", firstFrame, lastFrame, "30"));
+            var response =
+                _client.QuestionTimecode(new QuestionTimecodeRequest($"{_path}sample.mov", firstFrame, lastFrame,
+                    "29.97"));
+            Assert.AreEqual(OffsetsResult.Succeeded, response.OffsetsResult);
+            Assert.AreEqual("0x0", response.InBytes);
+            Assert.AreEqual("0x3647974", response.OutBytes);
+        }
+
+        [Test]
+        public void TestQuestionTimecodeFileNotFound()
+        {
+            var firstFrame = new TimeCode("00:00:00:00");
+            var lastFrame = new TimeCode("00:00:10:00");
+            var response =
+                _client.QuestionTimecode(new QuestionTimecodeRequest($"{_path}not_found.mov", firstFrame, lastFrame,
+                    "29.97"));
+            Assert.AreEqual(OffsetsResult.ErrorFileNotFound, response.OffsetsResult);
         }
 
         [Test]
         public void TestReWrap()
         {
-            Assert.Ignore();
+            var firstFrame = new TimeCode("00:00:00:00");
+            var lastFrame = new TimeCode("00:00:10:00");
+            var response =
+                _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "29.97",
+                    @"C:\Users\Administrator\Desktop\sample_10sec.mov", "PartSampleFile"));
+            Assert.AreEqual(ReWrapResult.Succeeded, response.Result);
+        }
 
-            var firstFrame = new TimeCode("00:00:10:00");
-            var lastFrame = new TimeCode("00:05:00:00");
-            _client.ReWrap(new ReWrapRequest(@"C:\Media\SampleFile.mxf", firstFrame, lastFrame, "25", "0x0060000", "0x0080000", @"C:\Media\PartialSampleFile.mfx", "PartSampleFile"));
+        [Test]
+        public void TestReWrapErrorBadFramerate()
+        {
+            var firstFrame = new TimeCode("00:00:00:00");
+            var lastFrame = new TimeCode("00:00:10:00");
+            var response =
+                _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "0",
+                    @"C:\Users\Administrator\Desktop\sample_10sec.mov", "PartSampleFile"));
+            Assert.AreEqual(ReWrapResult.ErrorBadFramerate, response.Result);
         }
 
         [Test]
         public void TestReWrapStatus()
         {
-            Assert.Ignore();
-
-            _client.ReWrapStatus(new ReWrapStatusRequest("PartSampleFile"));
+            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("PartSampleFile"));
+            Assert.AreEqual(Phase.Complete, reWrapStatus.Phase);
         }
     }
 }

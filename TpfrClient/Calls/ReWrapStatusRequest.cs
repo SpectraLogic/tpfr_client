@@ -20,7 +20,7 @@ namespace TpfrClient.Calls
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="outputFileName">The out_filename value passed in the Partial File Request</param>
+        /// <param name="outputFileName">The out_filename value passed in the Partial File Request. This is Case Sensitive</param>
         public ReWrapStatusRequest(string outputFileName)
         {
             AddQueryParam("targetpartialname", outputFileName);

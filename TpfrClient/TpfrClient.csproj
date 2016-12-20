@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\TpfrClient.XML</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\TpfrClient.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,6 +51,7 @@
     <Compile Include="Calls\ReWrapRequest.cs" />
     <Compile Include="Calls\ReWrapStatusRequest.cs" />
     <Compile Include="Model\OffsetsStatus.cs" />
+    <Compile Include="Model\ReWrapResponse.cs" />
     <Compile Include="Model\ReWrapStatus.cs" />
     <Compile Include="Model\TimeCode.cs" />
     <Compile Include="ResponseParsers\IndexFileResponseParser.cs" />

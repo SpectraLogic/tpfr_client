@@ -42,7 +42,19 @@ namespace TpfrClient.Runtime
         public IHttpWebResponse Invoke(RestRequest request)
         {
             var httpWebRequest = CreateHttpWebRequest(request);
-            return httpWebRequest.GetResponse();
+
+            try
+            {
+                return httpWebRequest.GetResponse();
+            }
+            catch (WebException e)
+            {
+                if (e.Response == null)
+                {
+                    throw;
+                }
+                return new TpfrHttpWebResponse((HttpWebResponse) e.Response);
+            }
         }
 
         private IHttpWebRequest CreateHttpWebRequest(RestRequest request)
@@ -57,7 +69,7 @@ namespace TpfrClient.Runtime
 
             var httpRequest = (HttpWebRequest) WebRequest.Create(uriBuilder.Uri);
             httpRequest.Method = request.Verb.ToString();
-            
+
             if (Proxy != null)
             {
                 var webProxy = new WebProxy

@@ -55,10 +55,9 @@ namespace TpfrClient
         /// <summary>
         /// This method will use the parameters supplied to generate a Marquis XML file that will be used to create the partial output file.
         /// </summary>
-        /// <param name="request">
-        /// <seealso cref="ReWrapRequest"/>
-        /// </param>
-        void ReWrap(ReWrapRequest request);
+        /// <param name="request"><seealso cref="ReWrapRequest" /></param>
+        /// <returns></returns>
+        ReWrapResponse ReWrap(ReWrapRequest request);
 
         /// <summary>
         /// This method will return status (% complete) for the creation of a partial media file initiated using the Partial File Request API call.

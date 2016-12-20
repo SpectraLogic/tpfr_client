@@ -26,21 +26,17 @@ namespace TpfrClient.Calls
         /// <param name="firstFrame">Timecode of the first frame requested</param>
         /// <param name="lastFrame">Timecode of the last frame requested</param>
         /// <param name="frameRate">Frame rate, as returned in the file status report</param>
-        /// <param name="inByte">Byte offset of start of partial file relative to original file</param>
-        /// <param name="outByte">Byte offset of end of partial file relative to original file</param>
         /// <param name="partialRestoreFilePath">Full UNC path to partial restored file fragment</param>
-        /// <param name="outputFileName">output file name for partial media file (care should be taken that this does not clash with other part restores, e.g. from other sections of the same source file)</param>
-        public ReWrapRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate, string inByte,
-            string outByte, string partialRestoreFilePath, string outputFileName)
+        /// <param name="outputFileName">output file name for partial media file (care should be taken that this does not clash with other part restores, e.g. from other sections of the same source file). This should not have an extension, as this will added automatically.</param>
+        public ReWrapRequest(string filePath, TimeCode firstFrame, TimeCode lastFrame, string frameRate,
+            string partialRestoreFilePath, string outputFileName)
         {
             AddQueryParam("filepath", filePath);
             AddQueryParam("tcin", firstFrame.Time);
             AddQueryParam("tcout", lastFrame.Time);
             AddQueryParam("fileframerate", frameRate);
-            AddQueryParam("in_byte", inByte);
-            AddQueryParam("out_byte", outByte);
             AddQueryParam("part_file", partialRestoreFilePath);
-            AddQueryParam("out_fileName", outputFileName);
+            AddQueryParam("out_filename", outputFileName);
         }
 
         internal override HttpVerb Verb => HttpVerb.PUT;

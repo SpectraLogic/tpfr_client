@@ -14,18 +14,27 @@
  */
 
 using System.Net;
+using TpfrClient.Model;
 using TpfrClient.Runtime;
 
 namespace TpfrClient.ResponseParsers
 {
-    internal class ReWrapResponseParser : IResponseParser<object>
+    internal class ReWrapResponseParser : IResponseParser<ReWrapResponse>
     {
-        public object Parse(IHttpWebResponse response)
+        public ReWrapResponse Parse(IHttpWebResponse response)
         {
             using (response)
             {
-                ResponseParseUtils.HandleStatusCode(response, (HttpStatusCode)200);
-                return null;
+                ResponseParseUtils.HandleStatusCode(response, (HttpStatusCode) 200, (HttpStatusCode) 400);
+                using (var stream = response.GetResponseStream())
+                {
+                    var element = XmlExtensions.ReadDocument(stream).ElementOrThrow("partialfile");
+
+                    return new ReWrapResponse
+                    {
+                        Result = ResponseParseUtils.GetReWrapResult(element.AttributeTextOrNull("partialfileResult")),
+                    };
+                }
             }
         }
     }

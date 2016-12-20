@@ -104,6 +104,18 @@
   <ItemGroup>
     <EmbeddedResource Include="TestFiles\PartialFileStatusError.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\SuccessfulReWrap.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\DuplicateParameter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\IncorrectFramerate.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\MissingParameter.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
