@@ -19,7 +19,7 @@ using TpfrClient.Model;
 
 namespace TpfrExamples
 {
-    public static class IndexFileExample
+    public static class QuestionTimecodeExample
     {
         public static void Main()
         {
@@ -31,21 +31,21 @@ namespace TpfrExamples
             var client = new TpfrClient.TpfrClient(hostName, port)
                 .WithProxy(proxy);
 
-            var status = client.IndexFile(new IndexFileRequest(@"\\Media Folder\filename.ext"));
-            switch (status.IndexResult)
+            var firstFrame = new TimeCode("00:00:00:00");
+            var lastFrame = new TimeCode("00:00:10:00");
+            var offsetsStatus =
+                client.QuestionTimecode(new QuestionTimecodeRequest(@"\\Media Folder\filename.ext", firstFrame,
+                    lastFrame, "29.97"));
+
+            switch (offsetsStatus.OffsetsResult)
             {
-                case IndexResult.Succeeded:
-                {
-                    Console.WriteLine(
-                        $"{status.IndexResult}, {status.IndexTime}, {status.FileStartTc}, {status.FileDuration}, {status.FileFrameRate}");
+                case OffsetsResult.Succeeded:
+                    Console.WriteLine($"{offsetsStatus.InBytes}, {offsetsStatus.OutBytes}");
                     break;
-                }
-                case IndexResult.Failed:
-                case IndexResult.ErrorFileNotFound:
-                case IndexResult.NotIndexed:
-                    Console.WriteLine($"{status.IndexResult}");
+                case OffsetsResult.ErrorFileNotFound:
+                    Console.WriteLine($"{offsetsStatus.OffsetsResult}");
                     break;
-                case IndexResult.Unknown:
+                case OffsetsResult.Unknown:
                     throw new ArgumentOutOfRangeException();
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -19,7 +19,7 @@ using TpfrClient.Model;
 
 namespace TpfrExamples
 {
-    public static class IndexFileExample
+    public static class ReWrapStatusExample
     {
         public static void Main()
         {
@@ -31,21 +31,20 @@ namespace TpfrExamples
             var client = new TpfrClient.TpfrClient(hostName, port)
                 .WithProxy(proxy);
 
-            var status = client.IndexFile(new IndexFileRequest(@"\\Media Folder\filename.ext"));
-            switch (status.IndexResult)
+            var reWrapStatus = client.ReWrapStatus(new ReWrapStatusRequest("filename"));
+            switch (reWrapStatus.Phase)
             {
-                case IndexResult.Succeeded:
-                {
-                    Console.WriteLine(
-                        $"{status.IndexResult}, {status.IndexTime}, {status.FileStartTc}, {status.FileDuration}, {status.FileFrameRate}");
+                case Phase.Pending:
+                case Phase.Parsing:
+                case Phase.Transferring:
+                case Phase.Complete:
+                    Console.WriteLine($"{reWrapStatus.Phase}, {reWrapStatus.Percentcomplete}");
                     break;
-                }
-                case IndexResult.Failed:
-                case IndexResult.ErrorFileNotFound:
-                case IndexResult.NotIndexed:
-                    Console.WriteLine($"{status.IndexResult}");
+                case Phase.Failed:
+                case Phase.Unknown:
+                    Console.WriteLine($"{reWrapStatus.Phase}, {reWrapStatus.Error}");
                     break;
-                case IndexResult.Unknown:
+                case null:
                     throw new ArgumentOutOfRangeException();
                 default:
                     throw new ArgumentOutOfRangeException();

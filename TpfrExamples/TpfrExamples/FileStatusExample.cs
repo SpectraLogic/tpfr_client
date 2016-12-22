@@ -32,27 +32,23 @@ namespace TpfrExamples
             ITpfrClient client = new TpfrClient.TpfrClient(hostName, port)
                 .WithProxy(proxy);
 
-            /*
-             *   The index files are generated in a parallel folder structure on the managed storage.
-             *   If the call references a mounted drive, e.g. C:\Media Folder\filename.ext, the index files are created in a folder in the form C:\PFR-INDEX\Media Folder\.
-             *   If the call references a UNC path, e.g. \\HostServerName\SharedFolder\Media Folder\filename.ext, the index files will be created in a folder in the form \\HostServerName\SharedFolder\PFR-INDEX\.
-             *   The PFR-INDEX folder will then replicate any lower level folder structures found with the source file.
-             */
-            var status = client.FileStatus(new FileStatusRequest(@"C:\Media Folder\filename.ext"));
+            var status = client.FileStatus(new FileStatusRequest(@"\\Media Folder\filename.ext"));
             switch (status.IndexResult)
             {
                 case IndexResult.Succeeded:
-                    {
-                        Console.WriteLine(
-                            $"{status.IndexResult}, {status.IndexTime}, {status.FileStartTc}, {status.FileDuration}, {status.FileFrameRate}");
-                        break;
-                    }
+                {
+                    Console.WriteLine(
+                        $"{status.IndexResult}, {status.IndexTime}, {status.FileStartTc}, {status.FileDuration}, {status.FileFrameRate}");
+                    break;
+                }
                 case IndexResult.Failed:
                 case IndexResult.ErrorFileNotFound:
                 case IndexResult.NotIndexed:
                     Console.WriteLine($"{status.IndexResult}");
                     break;
                 case IndexResult.Unknown:
+                    throw new ArgumentOutOfRangeException();
+                default:
                     throw new ArgumentOutOfRangeException();
             }
         }
