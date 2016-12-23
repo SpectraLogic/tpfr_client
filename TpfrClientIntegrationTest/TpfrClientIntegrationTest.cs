@@ -110,9 +110,8 @@ namespace TpfrClientIntegrationTest
         {
             var firstFrame = new TimeCode("00:00:00:00");
             var lastFrame = new TimeCode("00:00:10:00");
-            var response =
-                _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "29.97",
-                    @"C:\Users\Administrator\Desktop\sample_10sec.mov", "PartSampleFile"));
+            var response = _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "29.97",
+                $"{_path}sample_10sec.mov", "sampleRestore"));
             Assert.AreEqual(ReWrapResult.Succeeded, response.Result);
         }
 
@@ -123,14 +122,14 @@ namespace TpfrClientIntegrationTest
             var lastFrame = new TimeCode("00:00:10:00");
             var response =
                 _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "0",
-                    @"C:\Users\Administrator\Desktop\sample_10sec.mov", "PartSampleFile"));
+                    $"{_path}sample_10sec.mov", "sampleRestore"));
             Assert.AreEqual(ReWrapResult.ErrorBadFramerate, response.Result);
         }
 
         [Test]
         public void TestReWrapStatus()
         {
-            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("PartSampleFile"));
+            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("sampleRestore"));
             Assert.AreEqual(Phase.Complete, reWrapStatus.Phase);
         }
     }
