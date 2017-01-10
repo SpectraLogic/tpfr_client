@@ -36,7 +36,9 @@ namespace TpfrClient.ResponseParsers
                         IndexTime = element.AttributeTextOrNull("IndexTime"),
                         FileStartTc = element.AttributeTextOrNull("FileStartTC"),
                         FileDuration = element.AttributeTextOrNull("FileDuration"),
-                        FileFrameRate = element.AttributeTextOrNull("FileFrameRate")
+                        FileFrameRate = element.AttributeTextOrNull("FileFrameRate"),
+                        ErrorCode = element.AttributeTextOrNull("errorCode"),
+                        ErrorMessage = element.AttributeTextOrNull("errorStr")
                     };
                 }
             }

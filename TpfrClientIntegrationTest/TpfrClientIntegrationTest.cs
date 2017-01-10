@@ -58,6 +58,8 @@ namespace TpfrClientIntegrationTest
         {
             var status = _client.IndexFile(new IndexFileRequest($"{_path}error.mov"));
             Assert.AreEqual(IndexResult.Failed, status.IndexResult);
+            Assert.AreEqual("-2132778994", status.ErrorCode);
+            Assert.AreEqual(@"Failed to parse MOV file [\\ISV_RETROSPECT1\Share\error.mov] Error [Source could not be opened.]", status.ErrorMessage);
         }
 
         [Test]
@@ -108,10 +110,20 @@ namespace TpfrClientIntegrationTest
         [Test]
         public void TestReWrap()
         {
-            var firstFrame = new TimeCode("00:00:00:00");
-            var lastFrame = new TimeCode("00:00:10:00");
+            var firstFrame = new TimeCode("01:00:00;00");
+            var lastFrame = new TimeCode("01:00:10;00");
             var response = _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "29.97",
                 $"{_path}sample_10sec.mov", "sampleRestore"));
+            Assert.AreEqual(ReWrapResult.Succeeded, response.Result);
+        }
+
+        [Test]
+        public void TestReWrapWithBadRestoreFile()
+        {
+            var firstFrame = new TimeCode("00:00:00;00");
+            var lastFrame = new TimeCode("00:00:10;00");
+            var response = _client.ReWrap(new ReWrapRequest($"{_path}sample.mov", firstFrame, lastFrame, "29.97",
+                $"{_path}Sample_10sec.mov", "errorSampleRestore"));
             Assert.AreEqual(ReWrapResult.Succeeded, response.Result);
         }
 
@@ -131,6 +143,23 @@ namespace TpfrClientIntegrationTest
         {
             var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("sampleRestore"));
             Assert.AreEqual(Phase.Complete, reWrapStatus.Phase);
+        }
+
+        [Test]
+        public void TestReWrapStatusError()
+        {
+            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("errorSampleRestore"));
+            Assert.AreEqual(Phase.Failed, reWrapStatus.Phase);
+            Assert.AreEqual("0", reWrapStatus.Percentcomplete);
+            Assert.AreEqual("Requested subclip out of bounds.", reWrapStatus.ErrorMessage);
+        }
+
+        [Test]
+        public void TestReWrapStatusJobNotFound()
+        {
+            var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("notFound"));
+            Assert.AreEqual(null, reWrapStatus.Phase);
+            Assert.AreEqual("Job not found", reWrapStatus.Error);
         }
     }
 }

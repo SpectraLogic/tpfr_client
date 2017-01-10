@@ -35,6 +35,8 @@ namespace TpfrClient.ResponseParsers
                         Phase = ResponseParseUtils.GetPhaseResult(element.AttributeTextOrNull("phase")),
                         Percentcomplete = element.AttributeTextOrNull("percentcomplete"),
                         Error = element.AttributeTextOrNull("error"),
+                        ErrorCode = element.AttributeTextOrNull("errorCode"),
+                        ErrorMessage = element.AttributeTextOrNull("errorStr")
                     };
                 }
             }

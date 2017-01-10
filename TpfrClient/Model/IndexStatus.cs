@@ -13,6 +13,8 @@
  * ****************************************************************************
  */
 
+using System;
+
 namespace TpfrClient.Model
 {
     public class IndexStatus
@@ -22,6 +24,9 @@ namespace TpfrClient.Model
         public string FileStartTc { get; set; }
         public string FileDuration { get; set; }
         public string FileFrameRate { get; set; }
+        public string ErrorCode { get; set; }
+        public string ErrorMessage { get; set; }
+
     }
 
     public enum IndexResult

@@ -59,11 +59,11 @@ namespace TpfrClientTest
 
         private static readonly object[] ReWrapStatusObjects =
         {
-            new object[] {"JobPending.xml", Phase.Pending, "0"},
-            new object[] {"JobParsing.xml", Phase.Parsing, "25"},
-            new object[] {"JobTransferring.xml", Phase.Transferring, "50"},
-            new object[] {"JobComplete.xml", Phase.Complete, "100"},
-            new object[] {"JobFailed.xml", Phase.Failed, "0"}
+            new object[] {"JobPending.xml", Phase.Pending, "0", null, null},
+            new object[] {"JobParsing.xml", Phase.Parsing, "25", null, null},
+            new object[] {"JobTransferring.xml", Phase.Transferring, "50", null, null},
+            new object[] {"JobComplete.xml", Phase.Complete, "100", null, null},
+            new object[] {"JobFailed.xml", Phase.Failed, "0", "-2132778983", "Failed to create file" }
         };
 
         [Test]
@@ -85,7 +85,7 @@ namespace TpfrClientTest
 
         [Test]
         [TestCaseSource(nameof(ReWrapStatusObjects))]
-        public void TesReWrapStatus(string xmlFile, Phase phase, string percentComplete)
+        public void TesReWrapStatus(string xmlFile, Phase phase, string percentComplete, string errorCode, string errorMessage)
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
@@ -97,6 +97,8 @@ namespace TpfrClientTest
 
             Assert.AreEqual(phase, status.Phase);
             Assert.AreEqual(percentComplete, status.Percentcomplete);
+            Assert.AreEqual(errorCode, status.ErrorCode);
+            Assert.AreEqual(errorMessage, status.ErrorMessage);
 
             mockNetwork.VerifyAll();
         }
@@ -121,6 +123,8 @@ namespace TpfrClientTest
 
             Assert.AreEqual(IndexResult.Failed, status.IndexResult);
             Assert.AreEqual("2011/10/21 15:30:15", status.IndexTime);
+            Assert.AreEqual("400", status.ErrorCode);
+            Assert.AreEqual("Failed to index", status.ErrorMessage);
 
             mockNetwork.VerifyAll();
         }

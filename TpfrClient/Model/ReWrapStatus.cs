@@ -20,6 +20,8 @@ namespace TpfrClient.Model
         public string Error { get; set; }
         public Phase? Phase { get; set; }
         public string Percentcomplete { get; set; }
+        public string ErrorCode { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
     public enum Phase
