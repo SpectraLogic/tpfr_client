@@ -52,6 +52,8 @@ namespace TpfrClient.ResponseParsers
                     return IndexResult.ErrorFileNotFound;
                 case "Not Indexed":
                     return IndexResult.NotIndexed;
+                case "Indexing":
+                    return IndexResult.Indexing;
                 default:
                     return IndexResult.Unknown;
             }

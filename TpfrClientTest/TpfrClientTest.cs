@@ -164,6 +164,23 @@ namespace TpfrClientTest
         }
 
         [Test]
+        public void TestFileStatusIndexing()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusIndexing.xml",
+                    HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.FileStatus(new FileStatusRequest("filePath"));
+
+            Assert.AreEqual(IndexResult.Indexing, status.IndexResult);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
         public void TestFileNotFoundQuestionTimecode()
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);

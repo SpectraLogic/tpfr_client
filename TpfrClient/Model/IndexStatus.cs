@@ -35,6 +35,7 @@ namespace TpfrClient.Model
         Succeeded,
         ErrorFileNotFound,
         NotIndexed,
+        Indexing,
         Unknown
     }
 }
