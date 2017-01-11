@@ -44,6 +44,7 @@ namespace TpfrExamples
                 case IndexResult.Failed:
                 case IndexResult.ErrorFileNotFound:
                 case IndexResult.NotIndexed:
+                case IndexResult.Indexing:
                     Console.WriteLine($"{status.IndexResult}");
                     break;
                 case IndexResult.Unknown:

@@ -41,6 +41,11 @@ namespace TpfrExamples
                     break;
                 }
                 case IndexResult.Failed:
+                {
+                    Console.WriteLine(
+                        $"{status.IndexResult}, {status.IndexTime}, {status.ErrorCode}, {status.ErrorMessage}");
+                    break;
+                }
                 case IndexResult.ErrorFileNotFound:
                 case IndexResult.NotIndexed:
                     Console.WriteLine($"{status.IndexResult}");

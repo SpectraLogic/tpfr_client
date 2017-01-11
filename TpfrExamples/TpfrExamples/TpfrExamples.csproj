@@ -44,8 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="TpfrClient, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TpfrClient.0.2.0.0\lib\net452\TpfrClient.dll</HintPath>
+    <Reference Include="TpfrClient, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TpfrClient.0.4.0.0\lib\net452\TpfrClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

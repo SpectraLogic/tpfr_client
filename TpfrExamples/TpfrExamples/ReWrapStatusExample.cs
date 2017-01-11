@@ -38,12 +38,11 @@ namespace TpfrExamples
                 case Phase.Parsing:
                 case Phase.Transferring:
                 case Phase.Complete:
-                    Console.WriteLine($"{reWrapStatus.Phase}, {reWrapStatus.Percentcomplete}");
-                    break;
                 case Phase.Failed:
-                case Phase.Unknown:
-                    Console.WriteLine($"{reWrapStatus.Phase}, {reWrapStatus.Error}");
+                    Console.WriteLine($"{reWrapStatus.Phase}, {reWrapStatus.Percentcomplete}, {reWrapStatus.Error}, {reWrapStatus.ErrorMessage}");
                     break;
+                case Phase.Unknown:
+                    throw new ArgumentOutOfRangeException();
                 case null:
                     throw new ArgumentOutOfRangeException();
                 default:
