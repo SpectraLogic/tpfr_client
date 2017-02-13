@@ -72,7 +72,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.PartialFileStatusError.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.ReWrapStatus.PartialFileStatusError.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -90,7 +90,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles." + xmlFile, HttpStatusCode.OK));
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.ReWrapStatus." + xmlFile, HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.ReWrapStatus(new ReWrapStatusRequest("outputFileName"));
@@ -116,7 +116,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FailedToIndex.xml", HttpStatusCode.OK));
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.FailedToIndex.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.IndexFile(new IndexFileRequest("filePath"));
@@ -135,7 +135,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FailedToIndex.xml", HttpStatusCode.OK));
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.FailedToIndex.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.FileStatus(new FileStatusRequest("filePath"));
@@ -152,7 +152,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotPresent.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.FileStatusWhenFileNotPresent.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -169,7 +169,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusIndexing.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.FileStatusIndexing.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -186,7 +186,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileNotFoundOffsetsCall.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileOffset.FileNotFoundOffsetsCall.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -205,7 +205,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileStatusWhenFileNotIndexed.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.FileStatusWhenFileNotIndexed.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -230,7 +230,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles." + xmlFile, HttpStatusCode.OK));
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.ReWrap." + xmlFile, HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var response = client.ReWrap(
@@ -249,7 +249,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.GoodFileOffsetsCall.xml", HttpStatusCode.OK));
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileOffset.GoodFileOffsetsCall.xml", HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
             var status = client.QuestionTimecode(
@@ -264,12 +264,32 @@ namespace TpfrClientTest
         }
 
         [Test]
+        public void TestSucceededQuestionTimecodeAskingForLastFrame()
+        {
+            var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
+            mockNetwork
+                .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.FileOffset.GoodFileOffsetsCallAskingForLastFrame.xml", HttpStatusCode.OK));
+
+            var client = new TpfrClient.TpfrClient(mockNetwork.Object);
+            var status = client.QuestionTimecode(
+                new QuestionTimecodeRequest(
+                    "filePath", new TimeCode("00:00:00:00"), new TimeCode("00:00:00:00"), "00"));
+
+            Assert.AreEqual(OffsetsResult.Succeeded, status.OffsetsResult);
+            Assert.AreEqual("0x7c28014", status.InBytes);
+            Assert.AreEqual("0xffffffffffffffff", status.OutBytes);
+
+            mockNetwork.VerifyAll();
+        }
+
+        [Test]
         public void TestSuccessfulFileStatus()
         {
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.SuccessfulIndexFileOrFileStatusCall.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.SuccessfulIndexFileOrFileStatusCall.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);
@@ -290,7 +310,7 @@ namespace TpfrClientTest
             var mockNetwork = new Mock<INetwork>(MockBehavior.Strict);
             mockNetwork
                 .Setup(n => n.Invoke(It.IsAny<RestRequest>()))
-                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.SuccessfulIndexFileOrFileStatusCall.xml",
+                .Returns(new MockHttpWebResponse("TpfrClientTest.TestFiles.Index.SuccessfulIndexFileOrFileStatusCall.xml",
                     HttpStatusCode.OK));
 
             var client = new TpfrClient.TpfrClient(mockNetwork.Object);

@@ -69,55 +69,58 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\FailedToIndex.xml" />
+    <EmbeddedResource Include="TestFiles\Index\FailedToIndex.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\SuccessfulIndexFileOrFileStatusCall.xml" />
+    <EmbeddedResource Include="TestFiles\Index\SuccessfulIndexFileOrFileStatusCall.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\FileStatusWhenFileNotPresent.xml" />
+    <EmbeddedResource Include="TestFiles\Index\FileStatusWhenFileNotPresent.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\FileStatusWhenFileNotIndexed.xml" />
+    <EmbeddedResource Include="TestFiles\Index\FileStatusWhenFileNotIndexed.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\GoodFileOffsetsCall.xml" />
+    <EmbeddedResource Include="TestFiles\FileOffset\GoodFileOffsetsCallAskingForLastFrame.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\FileNotFoundOffsetsCall.xml" />
+    <EmbeddedResource Include="TestFiles\FileOffset\FileNotFoundOffsetsCall.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\JobPending.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\JobPending.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\JobParsing.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\JobParsing.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\JobTransferring.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\JobTransferring.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\JobComplete.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\JobComplete.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\JobFailed.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\JobFailed.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\PartialFileStatusError.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrapStatus\PartialFileStatusError.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\SuccessfulReWrap.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrap\SuccessfulReWrap.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\DuplicateParameter.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrap\DuplicateParameter.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\IncorrectFramerate.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrap\IncorrectFramerate.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\MissingParameter.xml" />
+    <EmbeddedResource Include="TestFiles\ReWrap\MissingParameter.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestFiles\FileStatusIndexing.xml" />
+    <EmbeddedResource Include="TestFiles\Index\FileStatusIndexing.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\FileOffset\GoodFileOffsetsCall.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
