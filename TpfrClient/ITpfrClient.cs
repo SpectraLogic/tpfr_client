@@ -44,7 +44,8 @@ namespace TpfrClient
 
         /// <summary>
         /// This method will block whilst retrieving the start and end byte offsets for the requested timecodes. The offsets are extended in order to handle GOP and interleave ordering.
-        /// Timecode format should be in form hh:mm:ss:ff for non-drop framerates and hh:mm:ss;ff for drop framerates
+        /// Timecode format should be in form hh:mm:ss:ff for non-drop framerates and hh:mm:ss;ff for drop framerates.
+        /// If the tcout requests the last frame or beyond from the source the return will give ‘0xffffffffffffffff’.
         /// </summary>
         /// <param name="request">
         /// <seealso cref="QuestionTimecodeRequest"/>
