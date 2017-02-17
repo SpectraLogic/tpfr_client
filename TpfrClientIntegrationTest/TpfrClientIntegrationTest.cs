@@ -58,8 +58,8 @@ namespace TpfrClientIntegrationTest
         {
             var status = _client.IndexFile(new IndexFileRequest($"{_path}error.mov"));
             Assert.AreEqual(IndexResult.Failed, status.IndexResult);
-            Assert.AreEqual("-2132778994", status.ErrorCode);
-            Assert.AreEqual(@"Failed to parse MOV file [\\ISV_RETROSPECT1\Share\error.mov] Error [Source could not be opened.]", status.ErrorMessage);
+            Assert.AreEqual("-2132778877", status.ErrorCode);
+            Assert.AreEqual(@"Failed to parse MOV file [\\ISV_RETROSPECT1\Users\spectra\error.mov] Error [Null atom discovered in QT movie.]", status.ErrorMessage);
         }
 
         [Test]
@@ -151,6 +151,7 @@ namespace TpfrClientIntegrationTest
             var reWrapStatus = _client.ReWrapStatus(new ReWrapStatusRequest("errorSampleRestore"));
             Assert.AreEqual(Phase.Failed, reWrapStatus.Phase);
             Assert.AreEqual("0", reWrapStatus.Percentcomplete);
+            Assert.AreEqual("-2132778927", reWrapStatus.ErrorCode);
             Assert.AreEqual("Requested subclip out of bounds.", reWrapStatus.ErrorMessage);
         }
 
